@@ -8,6 +8,10 @@
     "build": "rm -rf ./docs && node -r esm index.js",
     "serve": "bundle exec jekyll serve"
   },
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
