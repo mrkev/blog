@@ -19,6 +19,14 @@ function transformTemplate(templateCode) {
   });
 }
 
+class JSXTElem {
+  constructor(type, args, children) {
+    this.type = type;
+    this.args = args;
+    this.children = children;
+  }
+}
+
 class JSXT {
   // The last element will be our root element, becasue JS evaluates
   // arguments before it evaluates the parent (duh)
@@ -31,12 +39,7 @@ class JSXT {
       );
     }
 
-    const element = {
-      type,
-      args,
-      children,
-    };
-
+    const element = new JSXTElem(type, args, children);
     this.lastElement = element;
     return element;
   }
@@ -50,9 +53,11 @@ class JSXT {
         return "";
       }
       // Base case, text, etc children
-      if (typeof elem !== "object") {
+      if (!(elem instanceof JSXTElem)) {
         return String(elem);
       }
+
+      console.log(elem);
 
       const { type, args } = elem;
       const children = elem.children.filter((x) => x != null);
