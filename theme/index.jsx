@@ -30,7 +30,7 @@ const index = page;
       {index.pages.map((page) => (
         <li>
           <i>{page.modified.toISOString().split("T")[0]}</i>
-          <a href={page.canonicalOut}>{page.title}</a>
+          <a href={page.outputBasename}>{page.title}</a>
         </li>
       ))}
     </ul>

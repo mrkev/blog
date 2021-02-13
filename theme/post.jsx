@@ -17,9 +17,6 @@ const modified = page.modified.toISOString().split("T")[0];
       color: #444;
       padding: 0 10px
     }
-    footer {
-      line-height: 1;
-    }
     h1,h2,h3 { line-height:1.2 }
     `}</style>
   </head>

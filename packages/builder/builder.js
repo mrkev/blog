@@ -19,6 +19,14 @@ export default {
     const SOURCE_DIR = options.src || "src";
     const THEME_DIR = options.themeDir;
 
+    // if (SOURCE_DIR.slice(-1) !== path.sep) {
+    //   throw new Error(`Plase include a trailing ${path.sep} on the "src" dir`);
+    // }
+
+    // if (OUTPUT_DIR.slice(-1) !== path.sep) {
+    //   throw new Error(`Plase include a trailing ${path.sep} on the "out" dir`);
+    // }
+
     if (!THEME_DIR) {
       throw new Error("No theme to render with!");
     }
@@ -33,10 +41,12 @@ export default {
       linkFieldToEmbed,
       (page) => {
         // for SRC/posts/a/foo.md
+        // => foo.html
+        page.outputBasename = page.slug + ".html";
         // => DOCS/posts/a/foo.html
         page.outputFile = path.join(
           page.dir.replace(SOURCE_DIR, OUTPUT_DIR),
-          page.slug + ".html"
+          page.outputBasename
         );
         // => DOCS/posts/a
         page.outputDir = page.dir.replace(SOURCE_DIR, OUTPUT_DIR);
