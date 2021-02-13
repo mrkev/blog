@@ -52,12 +52,24 @@ class JSXT {
       if (elem == null) {
         return "";
       }
+
+      // Arrays are rendered recursivley
+      if (Array.isArray(elem)) {
+        depth++;
+        const renderedChildren = elem.map(renderRecursive).join("");
+        depth--;
+        return renderedChildren;
+      }
+
+      // Booleans, like in React, render nothing
+      if (typeof elem === "boolean") {
+        return "";
+      }
+
       // Base case, text, etc children
       if (!(elem instanceof JSXTElem)) {
         return String(elem);
       }
-
-      console.log(elem);
 
       const { type, args } = elem;
       const children = elem.children.filter((x) => x != null);
@@ -101,14 +113,14 @@ async function renderString(templateCode, vars) {
 
 module.exports = {
   renderString,
-  async renderToFile(file, template, { page }) {
+  async renderToFile(file, template, { vars }) {
     const maybePath = path.join(process.cwd(), template);
     const templateIsFile = existsSync(maybePath);
     const templateStr = templateIsFile
       ? readFileSync(maybePath, { encoding: "utf-8" })
       : template;
 
-    const rendered = await renderString(templateStr, page);
+    const rendered = await renderString(templateStr, vars);
     await outputFile(file, rendered);
   },
 };

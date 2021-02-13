@@ -1,37 +1,16 @@
+import { partition } from "./util";
 import path from "path";
 import globby from "globby";
 import { getPages } from "@sphido/core";
 import frontmatter from "@sphido/frontmatter";
-// import meta from "@sphido/meta";
-import { copySync, outputFile } from "fs-extra";
+import fs from "fs-extra";
 import { markdown } from "@sphido/markdown";
-// import { renderToFile } from "@sphido/nunjucks";
 import { renderToFile } from "sphido-jsx-templates";
 import basenameSlug from "sphido-basename-as-slug";
-
-const { statSync } = require("fs");
-const { inspect } = require("util");
-const slugify = require("@sindresorhus/slugify");
-
-const headline = /(?<=<h[12][^>]*?>)([^<>]+?)(?=<\/h[12]>)/i;
-
-const meta = (page) => {
-  const stats = page.file ? statSync(page.file) : null;
-  const extend = (extender) => {
-    Object.keys(extender).forEach(function (key) {
-      page[key] = page[key] || extender[key];
-    });
-  };
-
-  extend({
-    content: "",
-    // slug: slugify(page.title),
-    title: (page.content.match(headline) || [page.base || ""]).pop().trim(),
-    modified: stats ? new Date(inspect(stats.mtime)) : new Date(),
-    created: stats ? new Date(inspect(stats.birthtime)) : new Date(),
-    tags: new Set(page.tags || []),
-  });
-};
+import meta from "./meta";
+import { linkFieldToEmbed } from "./linkFieldToEmbed";
+// import meta from "@sphido/meta";
+// import { renderToFile } from "@sphido/nunjucks";
 
 export default {
   /** Builds the blog */
@@ -51,32 +30,91 @@ export default {
       require("@sphido/marked"),
       meta,
       basenameSlug,
+      linkFieldToEmbed,
       (page) => {
-        console.log(page);
+        // for SRC/posts/a/foo.md
+        // => DOCS/posts/a/foo.html
+        page.outputFile = path.join(
+          page.dir.replace(SOURCE_DIR, OUTPUT_DIR),
+          page.slug + ".html"
+        );
+        // => DOCS/posts/a
+        page.outputDir = page.dir.replace(SOURCE_DIR, OUTPUT_DIR);
+        // => /posts/a/foo.md
+        page.canonicalSrc = page.file.replace(SOURCE_DIR, "");
+        // => /posts/a/foo.html
+        page.canonicalOut = page.outputFile.replace(OUTPUT_DIR, "");
+        // => /posts/a
+        page.canonicalDir = page.dir.replace(SOURCE_DIR, "");
       },
     ];
 
     // 1. Process all md files
     const pages = await getPages(paths_md, ...extenders);
+    const pagesByCanonicalDir = partition(pages, (page) => page.canonicalDir);
 
     // 2. save pages
     for await (const page of pages) {
-      // outputFile(page.toFile, page.getHtml());
-      const output = path.join(
-        page.dir.replace("src", OUTPUT_DIR),
-        page.slug + ".html"
-      );
-      renderToFile(output, path.join(THEME_DIR, "post.jsx"), { page });
+      const contents = fs.readdirSync(THEME_DIR).filter((x) => x[0] === ".");
+      // console.log("stats", contents);
+
+      /*
+      theme
+        post.jsx
+        foo.jsx
+        footer.jsx
+        index.jsx
+      post
+        a.md
+        b.md
+      foo
+        a.md
+        b.md
+        */
+      // TODO: generate index.html from index.md file by passing "index" vars
+
+      const template = path.join(THEME_DIR, "post.jsx");
+      renderToFile(page.outputFile, template, { vars: page });
     }
 
+    // 3. Handle other static content
     const statics = await globby("src/**/*.{css,html,js,png}");
     for await (const st of statics) {
-      copySync(st, st.replace("src", OUTPUT_DIR));
+      fs.copySync(st, st.replace("src", OUTPUT_DIR));
+    }
+
+    // 4. Generate index pages
+    const canonicalDirs = Object.keys(pagesByCanonicalDir);
+
+    // {canonicalDir: [pages.html]}
+    const canonicalDirToGendPages = Object.fromEntries(
+      canonicalDirs.map((dir) => [
+        dir,
+        fs.readdirSync(path.join(OUTPUT_DIR, dir)),
+      ])
+    );
+
+    const canonicalDirsMissingIndex = Object.entries(canonicalDirToGendPages)
+      .filter(([_, files]) => files.indexOf("index.html") === -1)
+      .map(([dir, _]) => dir);
+
+    for (const canonicalDir of canonicalDirsMissingIndex) {
+      const indexOutput = path.join(OUTPUT_DIR, canonicalDir, "index.html");
+      const index = {
+        pages: pagesByCanonicalDir[canonicalDir].sort(
+          (a, b) => b.created - a.created
+        ),
+        title: canonicalDir,
+      };
+      const template = path.join(THEME_DIR, "index.jsx");
+      renderToFile(indexOutput, template, {
+        vars: index,
+      });
     }
 
     // copy over other folders
-    // copySync("src/css", path.join(OUTPUT_DIR, "css"));
-    // copySync("src/js", path.join(OUTPUT_DIR, "js"));
-    copySync("src/images", path.join(OUTPUT_DIR, "images"));
+    // fs.copySync("src/css", path.join(OUTPUT_DIR, "css"));
+    // fs.copySync("src/js", path.join(OUTPUT_DIR, "js"));
+    fs.copySync("src/images", path.join(OUTPUT_DIR, "images"));
   },
 };
