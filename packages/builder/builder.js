@@ -35,7 +35,7 @@ export default {
     const extenders = [
       frontmatter,
       markdown,
-      require("@sphido/marked"),
+      // require("@sphido/marked"),
       meta,
       basenameSlug,
       linkFieldToEmbed,
@@ -112,7 +112,7 @@ export default {
       const indexOutput = path.join(OUTPUT_DIR, canonicalDir, "index.html");
       const index = {
         pages: pagesByCanonicalDir[canonicalDir].sort(
-          (a, b) => b.created - a.created
+          (a, b) => b.modified - a.modified
         ),
         title: canonicalDir,
       };

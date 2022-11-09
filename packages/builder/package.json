@@ -1,11 +1,15 @@
 {
-  "name": "builder",
+  "name": "yip",
   "version": "1.0.0",
-  "description": "",
+  "description": "An opinionated blogging tool for github pages",
   "main": "builder.js",
+  "bin": "./builder-cli.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "ora": "^5.3.0"
+  }
 }
