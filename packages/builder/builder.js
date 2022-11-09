@@ -2,9 +2,9 @@ import { partition } from "./util.js";
 import path from "path";
 import globby from "globby";
 import { getPages } from "@sphido/core";
-import sphidoFrontmatter from "@sphido/frontmatter";
+import { frontmatter } from "@sphido/frontmatter";
 import fs from "fs-extra";
-import sphidoMarkdown from "@sphido/markdown";
+import { markdown } from "@sphido/markdown";
 import sphidoJSXTemplates from "sphido-jsx-templates";
 import basenameSlug from "sphido-basename-as-slug";
 import meta from "./meta.js";
@@ -13,8 +13,8 @@ import { linkFieldToEmbed } from "./linkFieldToEmbed.js";
 // import { renderToFile } from "@sphido/nunjucks";
 
 // Have to do it this way bc these modules are CJS
-const { frontmatter } = sphidoFrontmatter;
-const { markdown } = sphidoMarkdown;
+// const { frontmatter } = sphidoFrontmatter;
+// const { markdown } = sphidoMarkdown;
 const { renderToFile } = sphidoJSXTemplates;
 
 export default {
