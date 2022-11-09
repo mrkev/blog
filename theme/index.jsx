@@ -27,6 +27,11 @@ const index = page;
     <h2>Directory listing for {index.title}</h2>
     <hr />
     <ul>
+      {index.subdirectories.map((dir) => (
+        <li>
+          <a href={dir}>{dir}</a>
+        </li>
+      ))}
       {index.pages.map((page) => (
         <li>
           <i>{page.modified.toISOString().split("T")[0]}</i>
