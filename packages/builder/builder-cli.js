@@ -1,6 +1,6 @@
-#!/usr/bin/env node -r esm
+#!/usr/bin/env node
 
-import builder from "./builder";
+import builder from "./builder.js";
 import ora from "ora";
 import fs from "fs";
 

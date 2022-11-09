@@ -1,6 +1,6 @@
-const { statSync } = require("fs");
-const { inspect } = require("util");
-const slugify = require("@sindresorhus/slugify");
+import { statSync } from "fs";
+import { inspect } from "util";
+// const slugify = require("@sindresorhus/slugify");
 
 const headline = /(?<=<h[12][^>]*?>)([^<>]+?)(?=<\/h[12]>)/i;
 export default (page) => {

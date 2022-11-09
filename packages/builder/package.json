@@ -1,8 +1,8 @@
 {
   "name": "yip",
+  "type": "module",
   "version": "1.0.0",
   "description": "An opinionated blogging tool for github pages",
-  "main": "builder.js",
   "bin": "./builder-cli.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

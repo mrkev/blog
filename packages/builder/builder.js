@@ -1,16 +1,21 @@
-import { partition } from "./util";
+import { partition } from "./util.js";
 import path from "path";
 import globby from "globby";
 import { getPages } from "@sphido/core";
-import frontmatter from "@sphido/frontmatter";
+import sphidoFrontmatter from "@sphido/frontmatter";
 import fs from "fs-extra";
-import { markdown } from "@sphido/markdown";
-import { renderToFile } from "sphido-jsx-templates";
+import sphidoMarkdown from "@sphido/markdown";
+import sphidoJSXTemplates from "sphido-jsx-templates";
 import basenameSlug from "sphido-basename-as-slug";
-import meta from "./meta";
-import { linkFieldToEmbed } from "./linkFieldToEmbed";
+import meta from "./meta.js";
+import { linkFieldToEmbed } from "./linkFieldToEmbed.js";
 // import meta from "@sphido/meta";
 // import { renderToFile } from "@sphido/nunjucks";
+
+// Have to do it this way bc these modules are CJS
+const { frontmatter } = sphidoFrontmatter;
+const { markdown } = sphidoMarkdown;
+const { renderToFile } = sphidoJSXTemplates;
 
 export default {
   /** Builds the blog */
