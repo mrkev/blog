@@ -1,5 +1,7 @@
 // index { pages, title }
 const index = page;
+const isRoot = index.title === "";
+const title = isRoot ? "Index" : `Directory listing for ${index.title}`;
 
 <html lang="en">
   <head>
@@ -24,14 +26,19 @@ const index = page;
     `}</style>
   </head>
   <body>
-    <h2>Directory listing for {index.title}</h2>
+    <h2>{title}</h2>
+    {!isRoot && (
+      <div>
+        <a href={".."}>&lt; back</a>
+      </div>
+    )}
+    {index.subdirectories.map((dir) => (
+      <div>
+        <a href={dir}>{dir}</a>
+      </div>
+    ))}
     <hr />
     <ul>
-      {index.subdirectories.map((dir) => (
-        <li>
-          <a href={dir}>{dir}</a>
-        </li>
-      ))}
       {index.pages.map((page) => (
         <li>
           <i>{page.modified.toISOString().split("T")[0]}</i>

@@ -110,15 +110,18 @@ export default {
 
     for (const canonicalDir of canonicalDirsMissingIndex) {
       const indexOutput = path.join(OUTPUT_DIR, canonicalDir, "index.html");
-      const subdirectories = canonicalDirs.filter(
-        (dir) =>
-          // we prepend (ie, /post /post/articles)
-          dir.indexOf(canonicalDir) === 0 &&
-          // we are not the cannonical dir (no circular references)
-          dir !== canonicalDir &&
-          // direct decendants only (ie, /post no /post/articles/test)
-          dir.replace(canonicalDir + "/", "").indexOf("/") === -1
-      );
+      const subdirectories = canonicalDirs
+        .filter(
+          (dir) =>
+            // we prepend (ie, /post /post/articles)
+            dir.indexOf(canonicalDir) === 0 &&
+            // we are not the cannonical dir (no circular references)
+            dir !== canonicalDir &&
+            // direct decendants only (ie, /post no /post/articles/test)
+            dir.replace(canonicalDir + "/", "").indexOf("/") === -1
+        )
+        // make all paths relative
+        .map((dir) => "." + dir.replace(canonicalDir, ""));
       const index = {
         pages: pagesByCanonicalDir[canonicalDir].sort(
           (a, b) => b.modified - a.modified
