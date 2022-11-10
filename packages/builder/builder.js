@@ -61,11 +61,20 @@ export default {
         page.canonicalOut = page.outputFile.replace(OUTPUT_DIR, "");
         // => /posts/a
         page.canonicalDir = page.dir.replace(SOURCE_DIR, "");
+        // => ../../
+        page.ROOT_PATH = path.relative(page.outputFile, "/");
+
+        // root by default is '', make it '/'. All other paths are already prepended by '/'
+        if (page.canonicalDir === "") {
+          page.canonicalDir = "/";
+        }
       },
     ];
 
     // 1. Process all md files
     const pages = await getPages(paths_md, ...extenders);
+
+    // console.log(pages.map((page) => page.canonicalDir));
     const pagesByCanonicalDir = partition(pages, (page) => page.canonicalDir);
 
     // 2. save pages
@@ -101,6 +110,11 @@ export default {
     // 4. Generate index pages
     const canonicalDirs = Object.keys(pagesByCanonicalDir);
 
+    // 5. Always include '/' as a canonical dir, since we always want a root index page
+    if (canonicalDirs.indexOf("/") === -1) {
+      canonicalDirs.push("/");
+    }
+
     // {canonicalDir: [pages.html]}
     const canonicalDirToGendPages = Object.fromEntries(
       canonicalDirs.map((dir) => [
@@ -123,16 +137,18 @@ export default {
             // we are not the cannonical dir (no circular references)
             dir !== canonicalDir &&
             // direct decendants only (ie, /post no /post/articles/test)
-            dir.replace(canonicalDir + "/", "").indexOf("/") === -1
+            dir.replace(canonicalDir, "").indexOf("/") === -1
         )
         // make all paths relative
-        .map((dir) => "." + dir.replace(canonicalDir, ""));
+        .map((dir) => "./" + dir.replace(canonicalDir, ""));
       const index = {
-        pages: pagesByCanonicalDir[canonicalDir].sort(
-          (a, b) => b.modified - a.modified
-        ),
+        pages:
+          pagesByCanonicalDir[canonicalDir]?.sort(
+            (a, b) => b.modified - a.modified
+          ) ?? [],
         title: canonicalDir,
         subdirectories,
+        ROOT_PATH: path.relative(canonicalDir, "/"),
       };
       const template = path.join(THEME_DIR, "index.jsx");
       renderToFile(indexOutput, template, {

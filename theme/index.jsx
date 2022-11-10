@@ -1,6 +1,6 @@
 // index { pages, title }
 const index = page;
-const isRoot = index.title === "";
+const isRoot = index.title === "/";
 const title = isRoot ? "Index" : `Directory listing for ${index.title}`;
 
 <html lang="en">
@@ -8,22 +8,13 @@ const title = isRoot ? "Index" : `Directory listing for ${index.title}`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={`Listing of ${index.title}`} />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href={page.ROOT_PATH + "/css/main.css"}
+    />
 
     <title>Directory listing for {index.title}</title>
-    <style type="text/css">{`
-    body {
-      margin: 40px auto;
-      max-width: 650px;
-      line-height: 1.8;
-      font-size: 18px;
-      color: #444;
-      padding: 0 10px
-    }
-    footer {
-      line-height: 1;
-    }
-    h1,h2,h3 { line-height:1.2 }
-    `}</style>
   </head>
   <body>
     <h2>{title}</h2>

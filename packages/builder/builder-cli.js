@@ -8,8 +8,13 @@ import fs from "fs";
   const src = "src";
   const out = "docs";
 
-  const spinner = ora("Building...").start();
-  fs.rmdirSync(out, { recursive: true });
-  await builder.build({ themeDir: "./theme/" });
-  spinner.succeed(`Built ./${src} to ./${out}.`);
+  try {
+    const spinner = ora("Building...").start();
+    fs.rmdirSync(out, { recursive: true });
+    await builder.build({ themeDir: "./theme/" });
+    spinner.succeed(`Built ./${src} to ./${out}.`);
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
+  }
 })();

@@ -3,6 +3,17 @@ const { existsSync, outputFile, readFileSync } = require("fs-extra");
 const path = require("path");
 const prettify = require("html-prettify");
 
+const kebabize = (str) => {
+  return str
+    .split("")
+    .map((letter, idx) => {
+      return letter.toUpperCase() === letter
+        ? `${idx !== 0 ? "-" : ""}${letter.toLowerCase()}`
+        : letter;
+    })
+    .join("");
+};
+
 function transformTemplate(templateCode) {
   return new Promise(function (res, rej) {
     const code = "/** @jsx JSXT.elem */" + templateCode;
@@ -75,7 +86,16 @@ class JSXT {
       const children = elem.children.filter((x) => x != null);
       const renderedArgs = Object.keys(args || {})
         .map((key) => {
-          return `${key}="${String(args[key])}"`; // TODO, type of args[key]
+          const arg = args[key];
+          let str = String(arg);
+          if (typeof arg === "object" && key === "style") {
+            str = "";
+            for (const key in arg) {
+              str += `${kebabize(key)}:${String(arg[key])};`;
+            }
+          }
+
+          return `${key}="${str}"`; // TODO, type of args[key]
         })
         .join(" ");
 

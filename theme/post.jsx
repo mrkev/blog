@@ -6,23 +6,27 @@ const modified = page.modified.toISOString().split("T")[0];
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={page.title} />
-
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href={page.ROOT_PATH + "/css/main.css"}
+    />
     <title>{page.title}</title>
-    <style type="text/css">{`
-    body {
-      margin: 40px auto;
-      max-width: 650px;
-      line-height: 1.6;
-      font-size: 18px;
-      color: #444;
-      padding: 0 10px
-    }
-    h1,h2,h3 { line-height:1.2 }
-    `}</style>
   </head>
 
   <body>
-    <a href=".">back</a>
+    <header
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "baseline",
+        justifyContent: "space-between",
+      }}
+    >
+      <h1>aykev.dev/blog</h1>
+      <a href="http://aykev.dev/">about</a>
+    </header>
+    <a href=".">&lt; back to index</a>
     <hr />
     {page.embed}
     {page.content}
@@ -34,6 +38,8 @@ const modified = page.modified.toISOString().split("T")[0];
           {modified !== created && ", Revised: " + modified}
         </i>
       </small>
+      <br />
+      <a href=".">&lt; back to index</a>
     </footer>
   </body>
 </html>;
