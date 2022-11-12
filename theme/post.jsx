@@ -1,6 +1,8 @@
 const created = page.created.toISOString().split("T")[0];
 const modified = page.modified.toISOString().split("T")[0];
 
+console.log(page.ROOT_PATH + "/css/main.css");
+
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />

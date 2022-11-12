@@ -2,6 +2,7 @@
   "name": "sphido-jsx-templates",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "sphido-jsx-templates.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,5 +13,8 @@
     "@babel/core": "^7.12.16",
     "@babel/plugin-transform-react-jsx": "^7.12.16",
     "html-prettify": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.13"
   }
 }

@@ -1,7 +1,9 @@
-const babel = require("@babel/core");
-const { existsSync, outputFile, readFileSync } = require("fs-extra");
-const path = require("path");
-const prettify = require("html-prettify");
+import babel from "@babel/core";
+import fs from "fs-extra";
+import path from "path";
+// const prettify = import("html-prettify");
+
+const { existsSync, outputFile, readFileSync } = fs;
 
 const kebabize = (str) => {
   return str
@@ -123,7 +125,7 @@ class JSXT {
   }
 }
 
-async function renderString(templateCode, vars) {
+export async function renderString(templateCode, vars) {
   const transformed = await transformTemplate(templateCode);
   const evalFn = new Function("JSXT", "page", transformed.code);
   evalFn(JSXT, vars);
@@ -131,16 +133,13 @@ async function renderString(templateCode, vars) {
   return rendered;
 }
 
-module.exports = {
-  renderString,
-  async renderToFile(file, template, { vars }) {
-    const maybePath = path.join(process.cwd(), template);
-    const templateIsFile = existsSync(maybePath);
-    const templateStr = templateIsFile
-      ? readFileSync(maybePath, { encoding: "utf-8" })
-      : template;
+export async function renderToFile(file, template, { vars }) {
+  const maybePath = path.join(process.cwd(), template);
+  const templateIsFile = existsSync(maybePath);
+  const templateStr = templateIsFile
+    ? readFileSync(maybePath, { encoding: "utf-8" })
+    : template;
 
-    const rendered = await renderString(templateStr, vars);
-    await outputFile(file, rendered);
-  },
-};
+  const rendered = await renderString(templateStr, vars);
+  await outputFile(file, rendered);
+}

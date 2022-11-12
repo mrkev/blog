@@ -5,17 +5,27 @@ import { getPages } from "@sphido/core";
 import { frontmatter } from "@sphido/frontmatter";
 import fs from "fs-extra";
 import { markdown } from "@sphido/markdown";
-import sphidoJSXTemplates from "sphido-jsx-templates";
+import { renderToFile } from "sphido-jsx-templates";
 import basenameSlug from "sphido-basename-as-slug";
 import meta from "./meta.js";
 import { linkFieldToEmbed } from "./linkFieldToEmbed.js";
 // import meta from "@sphido/meta";
 // import { renderToFile } from "@sphido/nunjucks";
 
-// Have to do it this way bc these modules are CJS
-// const { frontmatter } = sphidoFrontmatter;
-// const { markdown } = sphidoMarkdown;
-const { renderToFile } = sphidoJSXTemplates;
+function findRelative(child, parent) {
+  if (child.indexOf(parent) !== 0) {
+    throw new Error(`${child} is not child of ${parent}`);
+  }
+
+  const relativePath = child
+    .replace(parent)
+    .split("/")
+    .filter((part) => part.length > 0)
+    .map(() => "..")
+    .join("/");
+
+  return relativePath;
+}
 
 export default {
   /** Builds the blog */
@@ -62,7 +72,9 @@ export default {
         // => /posts/a
         page.canonicalDir = page.dir.replace(SOURCE_DIR, "");
         // => ../../
-        page.ROOT_PATH = path.relative(page.outputFile, "/");
+        page.ROOT_PATH = findRelative(page.outputFile, OUTPUT_DIR);
+
+        // console.log(page.outputFile, OUTPUT_DIR);
 
         // root by default is '', make it '/'. All other paths are already prepended by '/'
         if (page.canonicalDir === "") {
@@ -141,6 +153,8 @@ export default {
         )
         // make all paths relative
         .map((dir) => "./" + dir.replace(canonicalDir, ""));
+
+      console.log("relll", path.relative(canonicalDir, "/"));
       const index = {
         pages:
           pagesByCanonicalDir[canonicalDir]?.sort(
