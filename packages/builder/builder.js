@@ -11,6 +11,7 @@ import meta from "./meta.js";
 import { linkFieldToEmbed } from "./linkFieldToEmbed.js";
 // import meta from "@sphido/meta";
 // import { renderToFile } from "@sphido/nunjucks";
+// TODO: rename ROOT_PATH to PATH_TO_ROOT
 
 // if the path contains /-ignore (ie, /src/ignore-test-page.md), it isn't processed
 
@@ -19,12 +20,13 @@ function findRelative(child, parent) {
     throw new Error(`${child} is not child of ${parent}`);
   }
 
-  const relativePath = child
-    .replace(parent)
+  const childDir = path.dirname(child);
+  const components = childDir
+    .replace(parent, "")
     .split("/")
     .filter((part) => part.length > 0)
-    .map(() => "..")
-    .join("/");
+    .map(() => "..");
+  const relativePath = components.length > 0 ? components.join("/") : ".";
 
   return relativePath;
 }
@@ -172,7 +174,7 @@ export default {
           ) ?? [],
         title: canonicalDir,
         subdirectories,
-        ROOT_PATH: path.relative(canonicalDir, "/"),
+        ROOT_PATH: findRelative(canonicalDir, "/"),
       };
       const template = path.join(THEME_DIR, "index.jsx");
       renderToFile(indexOutput, template, {
