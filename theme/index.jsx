@@ -14,10 +14,18 @@ const title = isRoot ? "Index" : `Directory listing for ${index.title}`;
       href={page.ROOT_PATH + "/css/main.css"}
     />
 
-    <title>Directory listing for {index.title}</title>
+    <title>{index.title}</title>
   </head>
   <body>
-    <h2>{title}</h2>
+    <header>
+      <h1>
+        <a href={page.ROOT_PATH}>Midnight Joke</a>
+      </h1>
+      <div style={{ flexGrow: 1 }}></div>
+      <a href="http://twitter.com/aykev">twitter</a>
+      <a href="http://aykev.dev/">www</a>
+      <a href={page.ROOT_PATH + "/about"}>about</a>
+    </header>
     {!isRoot && (
       <div>
         <a href={".."}>&lt; back</a>
@@ -30,12 +38,16 @@ const title = isRoot ? "Index" : `Directory listing for ${index.title}`;
     ))}
     <hr />
     <ul>
-      {index.pages.map((page) => (
-        <li>
-          <i>{page.modified.toISOString().split("T")[0]}</i>
-          <a href={page.outputBasename}>{page.title}</a>
-        </li>
-      ))}
+      {index.pages
+        .sort((a, b) => {
+          return b.created.getTime() - a.created.getTime();
+        })
+        .map((page) => (
+          <li>
+            <i>{page.created.toISOString().split("T")[0]}</i>
+            <a href={page.outputBasename}>{page.title}</a>
+          </li>
+        ))}
     </ul>
     <hr />
   </body>

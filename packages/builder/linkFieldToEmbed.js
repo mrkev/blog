@@ -27,7 +27,7 @@ export function linkFieldToEmbed(page) {
       // todo playlists
       /* <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1005356413&color=%23323c62&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/mr-onion" title="mr.kev" target="_blank" style="color: #cccccc; text-decoration: none;">mr.kev</a> · <a href="https://soundcloud.com/mr-onion/sets/summer-1995" title="Summer 1995" target="_blank" style="color: #cccccc; text-decoration: none;">Summer 1995</a></div> */
       default:
-        console.log(url.hostname);
+        console.log("unknown link", url.hostname);
     }
   }
 

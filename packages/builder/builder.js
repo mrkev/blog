@@ -12,6 +12,8 @@ import { linkFieldToEmbed } from "./linkFieldToEmbed.js";
 // import meta from "@sphido/meta";
 // import { renderToFile } from "@sphido/nunjucks";
 
+// if the path contains /-ignore (ie, /src/ignore-test-page.md), it isn't processed
+
 function findRelative(child, parent) {
   if (child.indexOf(parent) !== 0) {
     throw new Error(`${child} is not child of ${parent}`);
@@ -46,7 +48,9 @@ export default {
       throw new Error("No theme to render with!");
     }
 
-    const paths_md = await globby(`${SOURCE_DIR}/**/*.md`);
+    const paths_md = (await globby(`${SOURCE_DIR}/**/*.md`)).filter(
+      (path) => path.indexOf("/ignore-") === -1
+    );
     const extenders = [
       frontmatter,
       markdown,
@@ -55,6 +59,8 @@ export default {
       basenameSlug,
       linkFieldToEmbed,
       (page) => {
+        // page.indexed is true by default, even if not included
+        page.indexed = page.indexed === undefined ? true : page.indexed;
         // for SRC/posts/a/foo.md
         // => foo.html
         page.outputBasename = page.slug + ".html";
@@ -86,9 +92,6 @@ export default {
     // 1. Process all md files
     const pages = await getPages(paths_md, ...extenders);
 
-    // console.log(pages.map((page) => page.canonicalDir));
-    const pagesByCanonicalDir = partition(pages, (page) => page.canonicalDir);
-
     // 2. save pages
     for await (const page of pages) {
       const contents = fs.readdirSync(THEME_DIR).filter((x) => x[0] === ".");
@@ -118,6 +121,13 @@ export default {
     for await (const st of statics) {
       fs.copySync(st, st.replace("src", OUTPUT_DIR));
     }
+
+    // used for index page generation
+    const pagesInAnIndex = pages.filter((page) => page.indexed);
+    const pagesByCanonicalDir = partition(
+      pagesInAnIndex,
+      (page) => page.canonicalDir
+    );
 
     // 4. Generate index pages
     const canonicalDirs = Object.keys(pagesByCanonicalDir);
@@ -154,7 +164,7 @@ export default {
         // make all paths relative
         .map((dir) => "./" + dir.replace(canonicalDir, ""));
 
-      console.log("relll", path.relative(canonicalDir, "/"));
+      // console.log("relll", path.relative(canonicalDir, "/"));
       const index = {
         pages:
           pagesByCanonicalDir[canonicalDir]?.sort(

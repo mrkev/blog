@@ -6,6 +6,20 @@ body {
   color: #444;
   padding: 0 10px;
 }
+
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+h1 a {
+  color: #444;
+  text-decoration: none;
+}
+
 footer {
   line-height: 1;
 }
