@@ -24,5 +24,6 @@
     "fs-extra": "^10.1.0",
     "globby": "^11.0.1",
     "nunjucks": "^3.2.3"
-  }
+  },
+  "packageManager": "yarn@1.22.19"
 }
