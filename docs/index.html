@@ -6,6 +6,13 @@
     <meta name="description" content="Listing of /"></meta>
     <link rel="stylesheet" type="text/css" href="./css/main.css"></link>
     <title>/</title>
+    <script>
+      document.documentElement.setAttribute("data-theme", localStorage.getItem("data-theme") ?? "dark");
+      function setTheme(theme){
+        localStorage.setItem("data-theme", theme);
+        document.documentElement.setAttribute("data-theme", localStorage.getItem("data-theme") ?? theme);
+      }
+      </script>
   </head>
   <body>
     <header>
@@ -19,6 +26,10 @@
     </header>
     <hr></hr>
     <ul>
+        <li>
+          <i>2023-05-10</i>
+          <a href="inference-only-language.html">Full type inference is not great</a>
+        </li>
         <li>
           <i>2023-01-01</i>
           <a href="pale-blue-dot-2023.html">Happy 2023!</a>

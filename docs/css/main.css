@@ -1,9 +1,26 @@
+html[data-theme="light"] {
+  --fg: #444;
+  --bg: #fff;
+  /* a */
+  --link: revert;
+  --visited: revert;
+}
+
+html[data-theme="dark"] {
+  --fg: #e1e1ff;
+  --bg: #161625;
+  /* a */
+  --link: cornflowerblue;
+  --visited: darkorchid;
+}
+
 body {
   margin: 40px auto;
   max-width: 650px;
   line-height: 1.8;
   font-size: 18px;
-  color: #444;
+  background-color: var(--bg);
+  color: var(--fg);
   padding: 0 10px;
 }
 
@@ -15,8 +32,17 @@ header {
   gap: 12px;
 }
 
-h1 a {
-  color: #444;
+/* a:link {
+  color: var(--link);
+}
+
+a:visited {
+  color: var(--visited);
+} */
+
+h1 a:link,
+h1 a:visited {
+  color: var(--fg);
   text-decoration: none;
 }
 

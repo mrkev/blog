@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <meta name="description" content="Full type inference is not great"></meta>
+    <link rel="stylesheet" type="text/css" href="./css/main.css"></link>
+    <title>Full type inference is not great</title>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href=".">Midnight Joke</a>
+      </h1>
+      <div style="flex-grow:1;"></div>
+      <a href=".">< back</a>
+      <a href="http://twitter.com/aykev">twitter</a>
+      <a href="http://aykev.dev/">www</a>
+      <a href="./about">about</a>
+    </header>
+    <hr></hr>
+        <iframe border=0 frameborder=0 width=550 height=380 src="https://twitframe.com/show?url=https://twitter.com/diegohaz/status/1655544359150927874"></iframe>
+      <p>I saw this tweet recently, and thought I&#39;d write about where the limits of inference in typechecking lie. I answered the tweet but seeing as I haven&#39;t written a post recently, it seemed like a good excuse to put some hypothetical ink on some hypothetical paper.</p>
+<p>I&#39;m no typechecking expert, but through conversations I&#39;ve had with members of the <a href="https://flow.org">flow</a> team, and my own limited experience studying PL and writing a compiler in school, I have a notion of four big challenges that show up when &quot;infering everything&quot;. Aptly, they can be classified into two categories, I broadly will call &quot;performance&quot; and &quot;expectations&quot;.</p>
+<h2 id="performance">Performance</h2>
+<p>We can take this example by the same author as the tweet above to get a sense of what we&#39;d want, and to see where things get tricky;</p>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I really wish TypeScript could infer parameter types based on how they&#39;re used within the function scope. <a href="https://t.co/E4yqH0Fl8i">pic.twitter.com/E4yqH0Fl8i</a></p>&mdash; Haz (@diegohaz) <a href="https://twitter.com/diegohaz/status/1412749007106064384?ref_src=twsrc%5Etfw">July 7, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>Using this here example, the type of <code>plus10</code> depends on the type of <code>sum</code>. We can consider this one edge in a dependency graph that is directed but not acyclic.</p>
+<h3 id="1-depth">1. Depth</h3>
+<p>I&#39;ll loosely describe the first performance challenge as stemming from <strong>depth</strong>. We can say graph formed by the dependence of <code>plus10</code> on <code>sum</code> has depth <code>1</code>. If sum had dependencies, fully typechecking <code>plus10</code> would requires to traverse the graph two levels down, depth <code>2</code>. If those dependencies had dependencies, that&#39;s a depth of <code>3</code>.</p>
+<p>We quickly see this is a tree, and with each subsequent level of depth not only more complexity is a possibility (because each dependency <em>can</em> have any number of dependencies) but we also increase the likeleyhood of depending on &quot;slower edges&quot;. If a function lives in anohter file, we have to wait for I/O and parsing on that file to be able to use it, for example.</p>
+<h3 id="2-breath">2. Breath</h3>
+<p>If depth looks &quot;down&quot; at dependencies, I&#39;ll loosely describe the second performance challenge as stemming from <strong>breath</strong>, looking &quot;up&quot;[1].</p>
+<p>Imagine you edit a function that is depended upon by <code>n</code> other functions. Each of those could be depended upon by <code>n</code> others functions, and so forth. One change can have immense ramifications!</p>
+<p>When looking &quot;down&quot; at <em>depth</em> caching is an easy solution. All of the recursive dependencies of the expression you&#39;re editing are unlikely to change. When looking &quot;up&quot; at <em>breath</em>, chaching is rather ineffective. Your change could in theory lead to a type error on any dependant.</p>
+<p>It is true that with the right heuristics one can cut down on checking everything &quot;down&quot; or &quot;up&quot;, but heuristics alone can at most amortise these issues of time complexity, not definitieley solve them. A bad case wouldn&#39;t be to rare too. If one consideres both that this isn&#39;t an acyclic graph, and that pretty much all code in an app codebase is by defintion used by the app, it&#39;s easy to see how as the app grows so grow the probablity of changes that affect a lot of nodes, and the probability of clusters where editing one node necesitates checking a large number of other nodes, every time.</p>
+<p>[1]: Let&#39;s be real, the names for <strong>breath</strong> and <strong>depth</strong> above could be interchanged without a hitch. At the end of the day, they&#39;re issues of stemming <code>VxN</code></p>
+<h2 id="expectations">Expectations</h2>
+<p>For the next group of issues, once again lets look at this example:</p>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I really wish TypeScript could infer parameter types based on how they&#39;re used within the function scope. <a href="https://t.co/E4yqH0Fl8i">pic.twitter.com/E4yqH0Fl8i</a></p>&mdash; Haz (@diegohaz) <a href="https://twitter.com/diegohaz/status/1412749007106064384?ref_src=twsrc%5Etfw">July 7, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>Looking at <code>sum</code> here, one might expect it to be of type <code>(a: number, b: number) =&gt; number</code>, but in reality <code>+</code> works with 2 <code>string</code>s too. Or with a <code>string</code> and a <code>number</code>. The type for <code>sum</code>, perhaps unexpectedly at first, would actually be:</p>
+<pre><code class="language-typescript">type SumFn = (a: number | string, b: number | string) =&gt; number | string;
+</code></pre>
+<h3 id="3-introspection">3. Introspection</h3>
+<p>Imagine a complex app with 1 million functions; this is in no way out of the realm of possibility, and is in fact quite attainable. As you&#39;re working on this app, you call a function that should only return a <code>Coffee</code> object, but to your suprise it can also returns a <code>Drink</code>, <code>Promise</code>, a <code>number</code>, <code>null</code> and <code>undefined</code>. Why?</p>
+<p>You notice the function has 5 different code paths based on some paramenters, each of which returns the result of a different function. The first one is adding the <code>Promise</code>, and after digging deeper you realize you didn&#39;t <code>await</code> where you should. You dig deep on another codepath, but are unsure exactly where <code>number</code> is being added. You suspect <code>undefined</code> is coming from a function where you forgot to return from a specific code path.</p>
+<p>Quickly, what should&#39;ve been a simple change becomes a hunt. Without explict types, the only way to understand where a type is coming from is digging, until you find the spot that challenges your expectations. This is not only an issue of development speed. If there&#39;s any spot in the application where constraints for a type aren&#39;t enforced by a function call that expects a tight set of kinds, these unexpectedly-wide types get shipped. At best, in a language with <code>any</code>, this is a bug. At worst, nothing breaks, but you lose the ability to enforce tight interface design. This brings me to the last point.</p>
+<h3 id="4-expressiveness">4. Expressiveness</h3>
+<p>Without a way to say &quot;I want <code>sum</code> to only work with <code>number</code>s&quot;, you end up having to handle all cases, for all data types that could be handled by a function, all the time.</p>
+<p>In this example above, you have to handle <code>sum</code> returning a <code>string</code>. Other cases are more complex. The ability to design interfaces purposefully is one of the biggest advantages of having types in the first place, but opting for full inference gets rid of this.</p>
+<h2 id="wrapping-it-up">Wrapping it up</h2>
+<p><a href="https://flow.org">Flow</a> is called so becuase it&#39;s design is based on the idea of having types &quot;flow&quot; from one expression to the other: it has a very powerful inference engine. For a long time this was very useful, in a codebase that was in its majority untyped javascript, only just starting to slowly be migrated to flow, and developers who weren&#39;t used to writing types with their code.</p>
+<p>Eventually however, they had to enforce explicit types at certain boundaries, not because it the system couldn&#39;t infer them, but because computers and people couldn&#39;t handle the performance and cognitive costs of not having them.</p>
+<p>Where and how much to infer can certainly be be further fine tuned and improved to what computers and people need and what language features allow. But full inference is both difficult and probably undesirable, especially in the medium to short term, and certainly as applications grow.</p>
+<!-- https://twitter.com/aykev/status/1656079874463879170  -->
+    <hr></hr>
+    <footer>
+      <small>
+        <i>Created: 2023-05-10, Revised: 2023-05-11
+        </i>
+      </small>
+      <br></br>
+      <a href=".">< back to index</a>
+    </footer>
+  </body>
+</html>

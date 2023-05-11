@@ -6,6 +6,12 @@ export function linkFieldToEmbed(page) {
   function getEmbed() {
     const url = new URL(page.link);
     switch (url.hostname) {
+      case "twitter.com":
+        return `
+        <iframe border=0 frameborder=0 width=550 height=380 src="https://twitframe.com/show?url=${encodeURI(
+          url.href
+        )}"></iframe>
+      `;
       case "soundcloud.com":
         const config = {
           color: "#323c62",

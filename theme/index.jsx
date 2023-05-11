@@ -13,8 +13,16 @@ const title = isRoot ? "Index" : `Directory listing for ${index.title}`;
       type="text/css"
       href={page.ROOT_PATH + "/css/main.css"}
     />
-
     <title>{index.title}</title>
+    <script>
+      {`
+      document.documentElement.setAttribute("data-theme", localStorage.getItem("data-theme") ?? "dark");
+      function setTheme(theme){
+        localStorage.setItem("data-theme", theme);
+        document.documentElement.setAttribute("data-theme", localStorage.getItem("data-theme") ?? theme);
+      }
+      `}
+    </script>
   </head>
   <body>
     <header>
