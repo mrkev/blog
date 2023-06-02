@@ -14,6 +14,10 @@ html[data-theme="dark"] {
   --visited: darkorchid;
 }
 
+body > p > img {
+  width: 100%;
+}
+
 body {
   margin: 40px auto;
   max-width: 650px;
