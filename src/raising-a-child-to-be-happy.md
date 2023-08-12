@@ -1,6 +1,6 @@
 # Raising a child to be happy
 
-There’s a thread in Hacker News about global fertility rates, and unsurprisingly a few comments along the line of this one:
+There’s a [thread in Hacker News](https://news.ycombinator.com/item?id=36159936) about global fertility rates, and unsurprisingly a few comments along the line of this one:
 
 ![https://news.ycombinator.com/item?id=36160923](./images/raising-a-child-to-be-happy-1.png)
 
