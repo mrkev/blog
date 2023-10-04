@@ -2,15 +2,19 @@
 link: https://www.latimes.com/politics/story/2023-06-29/supreme-court-strikes-down-affirmative-action-in-college-admissions
 ---
 
-In the context of affirmative action I often see the perspective that college is a great equalizer of social class; a door to more income. Affirmative action is thus a tool to help historically marginalized and dispossesed racial groups recover economic power.
+In the context of affirmative action I often encounter the perspective that college is a great equalizer of social class; a door to more income. Affirmative action is thus a tool to help historically marginalized and dispossesed racial groups recover economic power.
 
-This is very fair and true. I don't have much to add to the discourse about this online.
+This is fair, true and often disputed by people who point out the injustice and hypocrisy of race-aware admissions (often hypocrite take on hypocrisy). Or the potential "lost" in not taking the "best" at the "best" institutions. I don't have much to add to the discourse about this online. It's a pretty standard back-and-forth.
 
-I do have to say though, that it's worth thinking about university and the role of affirmative action here beyond money. I don't see much discourse about it from the perspective of values and how it fits the American ethos. Individualism, self-determination, multiculturalism, tolerance— all aspects of the American zeitgeist at one point or another (and in one region or another).
+I do think lost in this conversation is the never-ending clash of t that it's worth thinking about university and the role of affirmative action here beyond money. I don't see much discourse about it from the perspective of values and how it fits the American ethos.
 
-Specifically in the context of education, do we want to think of universities as institutions that help people achieve their goals and affirmative action as the university deciding who _will_ achieve those goals or not, or do we want to think of universities as institutions formative of the American zeitgeist, and affirmative action as the university ensuring the zeitgeist involves said multiculturalism and tolerance?
+// Individualism, self-determination, multiculturalism, tolerance— all aspects of the American zeitgeist at one point or another (and in one region or another).
 
-I think this is why it's valuable to see this beyond the issue of money. If we think about affirmative action solely from the perspective of universities as a means to income, not only does the conversation devolve into the intricacies of "racism" and "fairness", but we also lose track of the bigger picture. We effectively devolve the conversation by founding it in the same set of values, and the same view of education, that lead other people to conclude affirmative action is unfair. I think it's productive, not only for the discourse of affirmative action, but a lot of other issues of academia, to realize the bigger role of education beyond its effects on social mobility.
+Specifically, do we want to think of universities as institutions that help people achieve _their_ goals and affirmative action as the university deciding who _will_ achieve those goals, or do we want to think of universities as institutions formative of the American zeitgeist, and affirmative action as the university ensuring the zeitgeist involves multiculturalism?
+
+The United States has long valued self-determination and individualism above all, and striking down affirmative action is one more instance of this.
+
+In my opinion, this is why it's valuable to see this beyond the issue of money. If we think about affirmative action solely from the perspective of universities as a means to income, not only does the conversation devolve into the intricacies of "racism" and "fairness", but we also lose track of the bigger picture. We effectively devolve the conversation by founding it in the same set of values, and the same view of education, that lead other people to conclude affirmative action is unfair. I think it's productive, not only for the discourse of affirmative action, but a lot of other issues of academia, to realize the bigger role of education beyond its effects on social mobility.
 
 Why fund the humanities? There's few jobs and little economic importance in them. What courses in ethics should be included in an engineering education? Why should doctorate students be better compensated? These and many more questions have their answers in a conversation about values, not "value".
 
