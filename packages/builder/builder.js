@@ -8,7 +8,10 @@ import { markdown } from "@sphido/markdown";
 import { renderToFile } from "sphido-jsx-templates";
 import basenameSlug from "sphido-basename-as-slug";
 import meta from "./meta.js";
-import { linkFieldToEmbed } from "./linkFieldToEmbed.js";
+import {
+  linkFieldToEmbed,
+  preprocessSpecialEmbeds,
+} from "./linkFieldToEmbed.js";
 // import meta from "@sphido/meta";
 // import { renderToFile } from "@sphido/nunjucks";
 // TODO: rename ROOT_PATH to PATH_TO_ROOT
@@ -55,6 +58,7 @@ export default {
     );
     const extenders = [
       frontmatter,
+      preprocessSpecialEmbeds,
       markdown,
       // require("@sphido/marked"),
       meta,

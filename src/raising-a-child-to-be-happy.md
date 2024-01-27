@@ -1,4 +1,4 @@
-# Raising a child to be happy
+# Birth Rates and Stress
 
 There’s a [thread in Hacker News](https://news.ycombinator.com/item?id=36159936) about global fertility rates, and unsurprisingly a few comments along the line of this one:
 
