@@ -26,16 +26,26 @@ html[data-theme="light"] {
   --fg: #000;
   --bg: #fff;
   /* a */
-  --link: revert;
-  --visited: revert;
+  --link: LinkText;
+  --visited: VisitedText;
 }
+/* green-ish */
+/* --fg: #f0f9f0;
+--bg: #222422; */
 
-html[data-theme="dark"] {
-  --fg: #e1e1ff;
-  --bg: #161625;
-  /* a */
+/* blue-ish */
+/* --fg: #e1e1ff;
+--bg: #161625; 
   --link: cornflowerblue;
   --visited: darkorchid;
+*/
+
+html[data-theme="dark"] {
+  --fg: #dee6de;
+  --bg: #222422;
+  /* a */
+  --link: Tomato;
+  --visited: Thistle;
 }
 
 body > p > img {
@@ -61,13 +71,13 @@ header {
   gap: 12px;
 }
 
-/* a:link {
+a:link {
   color: var(--link);
 }
 
 a:visited {
   color: var(--visited);
-} */
+}
 
 h1,
 h1 a:link,

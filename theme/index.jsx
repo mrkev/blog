@@ -16,10 +16,14 @@ const title = isRoot ? "Index" : `Directory listing for ${index.title}`;
     <title>{index.title}</title>
     <script>
       {`
-      document.documentElement.setAttribute("data-theme", localStorage.getItem("data-theme") ?? "light");
-      function setTheme(theme){
-        localStorage.setItem("data-theme", theme);
-        document.documentElement.setAttribute("data-theme", localStorage.getItem("data-theme") ?? theme);
+      const preference = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dark" : "light";
+      let theme = localStorage.getItem("data-theme") ?? preference;
+      document.documentElement.setAttribute("data-theme", theme);
+      function toggleTheme(){
+        const newTheme = theme === "light" ? "dark" : "light";
+        localStorage.setItem("data-theme", newTheme);
+        document.documentElement.setAttribute("data-theme", newTheme);
+        theme = newTheme;
       }
       `}
     </script>
@@ -68,5 +72,8 @@ tags.async=!0,tags.src="https://aykev.containers.piwik.pro/"+id+".js"+qPString,s
         ))}
     </ul>
     <hr />
+    <footer style="text-align: right;">
+      <a href="javascript:toggleTheme()">theme</a>
+    </footer>
   </body>
 </html>;
