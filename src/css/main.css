@@ -63,6 +63,25 @@ body {
   color-scheme: light normal dark;
 }
 
+code {
+  font-size: 0.825em;
+  background: #333333;
+  padding: 2px 4px 2px 4px;
+  border-radius: 3px;
+  color: white;
+}
+
+pre:has(code) {
+  background: #333333;
+  border-radius: 3px;
+  color: white;
+  padding: 4px 8px 8px 8px;
+}
+
+pre code {
+  padding: 0;
+}
+
 header {
   display: flex;
   flex-direction: row;
