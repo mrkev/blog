@@ -1,3 +1,26 @@
+/* https://dev.to/madsstoumann/dark-mode-in-3-lines-of-css-and-other-adventures-1ljj */
+
+/* :where(body) {
+  --background-color: #fff;
+  --text-color: #222;
+  --fg: #444;
+  --bg: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :where(body) {
+    --background-color: hsl(228, 5%, 15%);
+    --text-color: hsl(228, 5%, 80%);
+    --fg: #e1e1ff;
+  --bg: #161625;
+  }
+}
+
+body {
+  background-color: #222;
+  color: #aaa;
+} */
+
 html[data-theme="light"] {
   --fg: #444;
   --bg: #fff;
@@ -25,7 +48,8 @@ body {
   font-size: 18px;
   background-color: var(--bg);
   color: var(--fg);
-  padding: 0 10px;
+  /* padding: 0 10px; */
+  color-scheme: light dark;
 }
 
 header {
