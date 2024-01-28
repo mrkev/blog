@@ -42,7 +42,7 @@ html[data-theme="light"] {
 
 html[data-theme="dark"] {
   --fg: #dee6de;
-  --bg: #222422;
+  --bg: #232422;
   /* a */
   --link: Tomato;
   --visited: Thistle;
