@@ -1,6 +1,6 @@
 import { partition } from "./util.js";
 import path from "path";
-import globby from "globby";
+import { globby } from "globby";
 import { getPages } from "@sphido/core";
 import { frontmatter } from "@sphido/frontmatter";
 import fs from "fs-extra";
