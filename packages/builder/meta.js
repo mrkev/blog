@@ -15,10 +15,21 @@ export default (page) => {
   extend({
     content: "",
     // slug: slugify(page.title),
-    title: (page.content.match(headline) || [page.name || ""]).pop().trim(),
+    title: (
+      page.content.match(headline) || [titleifyKebabCase(page.name) || ""]
+    )
+      .pop()
+      .trim(),
     modified: stats ? new Date(inspect(stats.mtime)) : new Date(),
     created: stats ? new Date(inspect(stats.birthtime)) : new Date(),
     tags: new Set(page.tags || []),
     dir: dirname(page.path),
   });
 };
+
+function titleifyKebabCase(s) {
+  // https://stackoverflow.com/questions/64489395/converting-snake-case-string-to-title-case
+  return s.replace(/^-*(.)|-+(.)/g, (s, c, d) =>
+    c ? c.toUpperCase() : " " + d.toUpperCase()
+  );
+}

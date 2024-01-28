@@ -6,6 +6,13 @@
     <meta name="description" content="Two Lives at the End of the Night"></meta>
     <link rel="stylesheet" type="text/css" href="./css/main.css"></link>
     <title>Two Lives at the End of the Night</title>
+    <script>
+      document.documentElement.setAttribute("data-theme", localStorage.getItem("data-theme") ?? "light");
+      function setTheme(theme){
+        localStorage.setItem("data-theme", theme);
+        document.documentElement.setAttribute("data-theme", localStorage.getItem("data-theme") ?? theme);
+      }
+      </script>
   </head>
   <body>
     <script type="text/javascript">(function(window, document, dataLayerName, id) {

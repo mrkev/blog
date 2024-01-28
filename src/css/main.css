@@ -22,7 +22,8 @@ body {
 } */
 
 html[data-theme="light"] {
-  --fg: #444;
+  --hdr: #000;
+  --fg: #000;
   --bg: #fff;
   /* a */
   --link: revert;
@@ -49,7 +50,7 @@ body {
   background-color: var(--bg);
   color: var(--fg);
   /* padding: 0 10px; */
-  color-scheme: light dark;
+  color-scheme: light normal dark;
 }
 
 header {
@@ -68,9 +69,10 @@ a:visited {
   color: var(--visited);
 } */
 
+h1,
 h1 a:link,
 h1 a:visited {
-  color: var(--fg);
+  color: var(--hdr);
   text-decoration: none;
 }
 

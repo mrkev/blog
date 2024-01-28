@@ -12,6 +12,15 @@ const modified = page.modified.toISOString().split("T")[0];
       href={page.ROOT_PATH + "/css/main.css"}
     />
     <title>{page.title}</title>
+    <script>
+      {`
+      document.documentElement.setAttribute("data-theme", localStorage.getItem("data-theme") ?? "light");
+      function setTheme(theme){
+        localStorage.setItem("data-theme", theme);
+        document.documentElement.setAttribute("data-theme", localStorage.getItem("data-theme") ?? theme);
+      }
+      `}
+    </script>
   </head>
 
   <body>
