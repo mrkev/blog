@@ -1,17 +1,17 @@
-import { partition } from "./util.js";
-import path from "path";
-import { globby } from "globby";
 import { getPages } from "@sphido/core";
 import { frontmatter } from "@sphido/frontmatter";
-import fs from "fs-extra";
 import { markdown } from "@sphido/markdown";
-import { renderToFile } from "sphido-jsx-templates";
+import fs from "fs-extra";
+import { globby } from "globby";
+import path from "path";
 import basenameSlug from "sphido-basename-as-slug";
-import meta from "./meta.js";
+import { renderToFile } from "sphido-jsx-templates";
 import {
   linkFieldToEmbed,
   preprocessSpecialEmbeds,
 } from "./linkFieldToEmbed.js";
+import meta from "./meta.js";
+import { partition } from "./util.js";
 // import meta from "@sphido/meta";
 // import { renderToFile } from "@sphido/nunjucks";
 // TODO: rename ROOT_PATH to PATH_TO_ROOT
@@ -34,6 +34,25 @@ function findRelative(child, parent) {
   return relativePath;
 }
 
+function include(dirent) {
+  if (
+    dirent.name.startsWith("_") ||
+    dirent.name.startsWith(".") ||
+    dirent.name.startsWith("ignore-")
+  ) {
+    return false;
+  }
+
+  if (dirent.isFile()) {
+    // Accept *.md, *.html
+    const res = dirent.name.endsWith(".md") || dirent.name.endsWith(".html");
+    return res;
+  }
+
+  // Ignore dirs
+  return false;
+}
+
 export default {
   /** Builds the blog */
   async build(options = {}) {
@@ -53,9 +72,6 @@ export default {
       throw new Error("No theme to render with!");
     }
 
-    const paths_md = (await globby(`${SOURCE_DIR}/**/*.md`)).filter(
-      (path) => path.indexOf("/ignore-") === -1
-    );
     const extenders = [
       frontmatter,
       preprocessSpecialEmbeds,
@@ -78,7 +94,7 @@ export default {
         // => DOCS/posts/a
         page.outputDir = page.dir.replace(SOURCE_DIR, OUTPUT_DIR);
         // => /posts/a/foo.md
-        page.canonicalSrc = page.file.replace(SOURCE_DIR, "");
+        // page.canonicalSrc = page.file.replace(SOURCE_DIR, "");
         // => /posts/a/foo.html
         page.canonicalOut = page.outputFile.replace(OUTPUT_DIR, "");
         // => /posts/a
@@ -96,7 +112,8 @@ export default {
     ];
 
     // 1. Process all md files
-    const pages = await getPages(paths_md, ...extenders);
+    const pages = await getPages({ path: SOURCE_DIR, include }, ...extenders);
+    // process.exit(0);
 
     // 2. save pages
     for await (const page of pages) {

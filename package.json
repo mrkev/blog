@@ -15,8 +15,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sphido/core": "1.1.0",
-    "@sphido/frontmatter": "1.1.0",
+    "@sphido/core": "2.0.24",
+    "@sphido/frontmatter": "2.0.12",
     "@sphido/markdown": "1.1.0",
     "@sphido/meta": "^0.0.9",
     "@sphido/nunjucks": "^0.0.8",

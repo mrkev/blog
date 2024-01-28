@@ -5,11 +5,11 @@
 const TAKEN_NAMES = new Set();
 
 export default function basenameAsSlug(page) {
-  const name = page.base;
+  const name = page.name;
   if (TAKEN_NAMES.has(name)) {
-    throw new Error("Duplicate posts!");
+    throw new Error(`Duplicate posts! Two posts named: ${name}`);
   } else {
     TAKEN_NAMES.add(name);
   }
-  page.slug = page.base;
+  page.slug = page.name;
 }

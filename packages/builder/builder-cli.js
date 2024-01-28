@@ -10,7 +10,9 @@ import fs from "fs";
 
   try {
     const spinner = ora("Building...").start();
-    fs.rmdirSync(out, { recursive: true });
+    if (fs.existsSync(out)) {
+      fs.rmSync(out, { recursive: true });
+    }
     await builder.build({ themeDir: "./theme/" });
     spinner.succeed(`Built ./${src} to ./${out}.`);
   } catch (e) {
