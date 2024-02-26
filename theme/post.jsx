@@ -1,11 +1,41 @@
 const created = page.created.toISOString().split("T")[0];
 const modified = page.modified.toISOString().split("T")[0];
 
+const description = "a post by Kevin Chavez";
+const previewImage = "http://aykev.dev/favicon/apple-touch-icon.png";
+
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={page.title} />
+    <meta name="author" content="Kevin Chavez" />
+    {/* twitter */}
+    <meta name="twitter:site" content="@aykev" />
+    <meta name="twitter:domain" content="aykev.dev" />
+    <meta name="twitter:card" content="summary" />
+    {/* Facebook */}
+    <meta property="og:site_name" content="Midnight Joke" />
+    <meta property="og:type" content="article" />
+    {/* Both */}
+    <meta
+      name="twitter:title"
+      property="og:title"
+      itemprop="name"
+      content={page.title}
+    />
+    <meta
+      name="twitter:description"
+      property="og:description"
+      itemprop="description"
+      content={description}
+    ></meta>
+    <meta
+      property="og:image"
+      itemprop="image primaryImageOfPage"
+      content={previewImage}
+    />
+    {/* Site */}
     <link
       rel="stylesheet"
       type="text/css"
