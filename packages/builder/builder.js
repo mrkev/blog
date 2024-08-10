@@ -1,6 +1,6 @@
 import { getPages } from "@sphido/core";
 import { frontmatter } from "@sphido/frontmatter";
-import { markdown } from "@sphido/markdown";
+import { markdown } from "sphido-markdown";
 import fs from "fs-extra";
 import { globby } from "globby";
 import path from "path";

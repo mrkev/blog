@@ -17,13 +17,14 @@
   "dependencies": {
     "@sphido/core": "2.0.24",
     "@sphido/frontmatter": "2.0.12",
-    "@sphido/markdown": "1.1.0",
     "@sphido/meta": "^0.0.9",
     "@sphido/nunjucks": "^0.0.8",
     "esm": "^3.2.25",
     "fs-extra": "^11.2.0",
     "globby": "^14.0.0",
-    "nunjucks": "^3.2.4"
+    "marked": "^4.0.17",
+    "nunjucks": "^3.2.4",
+    "sphido-markdown": "^1.0.0"
   },
   "packageManager": "yarn@1.22.19"
 }
