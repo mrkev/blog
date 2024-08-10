@@ -18,6 +18,7 @@ import meta from "./meta.ts";
 import { partition } from "./util.ts";
 // import meta from "@sphido/meta";
 // import { renderToFile } from "@sphido/nunjucks";
+
 // TODO: rename ROOT_PATH to PATH_TO_ROOT
 
 // if the path contains /-ignore (ie, /src/ignore-test-page.md), it isn't processed
@@ -59,7 +60,7 @@ function include(dirent) {
 
 export default {
   /** Builds the blog */
-  async build(options: any = {}) {
+  async build(options: { out?: string; src?: string; themeDir: string }) {
     const OUTPUT_DIR = options.out || "docs";
     const SOURCE_DIR = options.src || "src";
     const THEME_DIR = options.themeDir;
