@@ -1,9 +1,7 @@
 #!/usr/bin/env node --experimental-strip-types
 
 import builder from "./builder.ts";
-//@ts-ignore
 import ora from "ora";
-//@ts-ignore
 import fs from "fs";
 
 (async function () {
@@ -15,6 +13,7 @@ import fs from "fs";
     if (fs.existsSync(out)) {
       fs.rmSync(out, { recursive: true });
     }
+    await builder.prepare({});
     await builder.build({ themeDir: "./theme/" });
     spinner.succeed(`Built ./${src} to ./${out}.`);
   } catch (e) {

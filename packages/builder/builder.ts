@@ -1,11 +1,11 @@
 import { getPages } from "@sphido/core";
+import yaml from "js-yaml";
 // @ts-ignore
 import { frontmatter } from "@sphido/frontmatter";
-// @ts-ignore
-import { markdown } from "sphido-markdown";
 import fs from "fs-extra";
 import { globby } from "globby";
 import { dirname, join as pathJoin } from "path";
+import { markdown } from "sphido-markdown";
 // @ts-ignore
 import basenameSlug from "sphido-basename-as-slug";
 // @ts-ignore
@@ -14,8 +14,11 @@ import {
   linkFieldToEmbed,
   preprocessSpecialEmbeds,
 } from "./linkFieldToEmbed.ts";
-import meta from "./meta.ts";
+import meta, { dates } from "./meta.ts";
+import { motificationStatus } from "./modificationStatus.ts";
 import { partition } from "./util.ts";
+import { frontmatterRaw } from "./frontmatterRaw.ts";
+
 // import meta from "@sphido/meta";
 // import { renderToFile } from "@sphido/nunjucks";
 
@@ -23,7 +26,7 @@ import { partition } from "./util.ts";
 
 // if the path contains /-ignore (ie, /src/ignore-test-page.md), it isn't processed
 
-function findRelative(child, parent) {
+function findRelative(child: string, parent: string) {
   if (child.indexOf(parent) !== 0) {
     throw new Error(`${child} is not child of ${parent}`);
   }
@@ -59,6 +62,55 @@ function include(dirent) {
 }
 
 export default {
+  async prepare(options: { src?: string }) {
+    const SOURCE_DIR = options.src || "src";
+
+    let pages = await getPages(
+      { path: SOURCE_DIR, include },
+      ...[frontmatterRaw, dates, motificationStatus]
+    );
+
+    // only modified files that changed
+    pages = pages.filter((page) => page.gitStatus != "--");
+
+    for (const page of pages) {
+      let newMeta: Record<string, any> = {};
+
+      // ensure newly createed pages have a creation date
+      if (page.gitStatus === "created") {
+        newMeta.created = page.meta.created ?? yaml.dump(page.created);
+      }
+
+      // ensure modified pages have a modification date
+      if (page.gitStatus === "modified") {
+        newMeta.modified =
+          page.meta.modified ?? yaml.dump(page.modified).trim();
+      }
+
+      // ensure all pages havea creation date
+      if (page.gitStatus === "--" && page.meta.created == null) {
+        newMeta.created = page.meta.created ?? yaml.dump(page.created).trim();
+      }
+
+      if (Object.keys(newMeta).length === 0) {
+        continue;
+      }
+
+      const newMetaStr = yaml.dump(newMeta, { schema: yaml.JSON_SCHEMA });
+      console.log(page);
+      console.log(newMetaStr);
+
+      const content = [
+        //
+        "---\n",
+        newMetaStr,
+        "---",
+        page.content,
+      ].join("");
+      fs.writeFileSync(page.path, content, { encoding: "utf8" });
+    }
+  },
+
   /** Builds the blog */
   async build(options: { out?: string; src?: string; themeDir: string }) {
     const OUTPUT_DIR = options.out || "docs";
@@ -72,12 +124,6 @@ export default {
     // if (OUTPUT_DIR.slice(-1) !== path.sep) {
     //   throw new Error(`Plase include a trailing ${path.sep} on the "out" dir`);
     // }
-
-    // TODO:
-    // check via git what files changed
-    // if a file changed, set revised date
-    // if a file doesn't have created/revised, set them fs creation date
-    // write original markdown
 
     if (!THEME_DIR) {
       throw new Error("No theme to render with!");
@@ -124,6 +170,7 @@ export default {
 
     // 1. Process all md files
     const pages = await getPages({ path: SOURCE_DIR, include }, ...extenders);
+    // console.log(pages);
     // process.exit(0);
 
     // 2. save pages

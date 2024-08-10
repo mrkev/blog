@@ -13,3 +13,12 @@ export function partition(array, getBucket) {
 
   return result;
 }
+
+export function extend<T extends {}, U>(
+  page: Record<string, any>,
+  extender: Record<string, any>
+) {
+  Object.keys(extender).forEach(function (key) {
+    page[key] = page[key] || extender[key];
+  });
+}
