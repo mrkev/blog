@@ -1,7 +1,9 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --experimental-strip-types
 
-import builder from "./builder.js";
+import builder from "./builder.ts";
+//@ts-ignore
 import ora from "ora";
+//@ts-ignore
 import fs from "fs";
 
 (async function () {

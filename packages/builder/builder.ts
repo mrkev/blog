@@ -1,17 +1,21 @@
 import { getPages } from "@sphido/core";
+// @ts-ignore
 import { frontmatter } from "@sphido/frontmatter";
+// @ts-ignore
 import { markdown } from "sphido-markdown";
 import fs from "fs-extra";
 import { globby } from "globby";
-import path from "path";
+import { dirname, join as pathJoin } from "path";
+// @ts-ignore
 import basenameSlug from "sphido-basename-as-slug";
+// @ts-ignore
 import { renderToFile } from "sphido-jsx-templates";
 import {
   linkFieldToEmbed,
   preprocessSpecialEmbeds,
-} from "./linkFieldToEmbed.js";
-import meta from "./meta.js";
-import { partition } from "./util.js";
+} from "./linkFieldToEmbed.ts";
+import meta from "./meta.ts";
+import { partition } from "./util.ts";
 // import meta from "@sphido/meta";
 // import { renderToFile } from "@sphido/nunjucks";
 // TODO: rename ROOT_PATH to PATH_TO_ROOT
@@ -23,7 +27,7 @@ function findRelative(child, parent) {
     throw new Error(`${child} is not child of ${parent}`);
   }
 
-  const childDir = path.dirname(child);
+  const childDir = dirname(child);
   const components = childDir
     .replace(parent, "")
     .split("/")
@@ -55,7 +59,7 @@ function include(dirent) {
 
 export default {
   /** Builds the blog */
-  async build(options = {}) {
+  async build(options: any = {}) {
     const OUTPUT_DIR = options.out || "docs";
     const SOURCE_DIR = options.src || "src";
     const THEME_DIR = options.themeDir;
@@ -67,6 +71,12 @@ export default {
     // if (OUTPUT_DIR.slice(-1) !== path.sep) {
     //   throw new Error(`Plase include a trailing ${path.sep} on the "out" dir`);
     // }
+
+    // TODO:
+    // check via git what files changed
+    // if a file changed, set revised date
+    // if a file doesn't have created/revised, set them fs creation date
+    // write original markdown
 
     if (!THEME_DIR) {
       throw new Error("No theme to render with!");
@@ -87,7 +97,7 @@ export default {
         // => foo.html
         page.outputBasename = page.slug + ".html";
         // => DOCS/posts/a/foo.html
-        page.outputFile = path.join(
+        page.outputFile = pathJoin(
           page.dir.replace(SOURCE_DIR, OUTPUT_DIR),
           page.outputBasename
         );
@@ -135,8 +145,8 @@ export default {
         */
       // TODO: generate index.html from index.md file by passing "index" vars
 
-      const template = path.join(THEME_DIR, "post.jsx");
-      renderToFile(page.outputFile, template, { vars: page });
+      const template = pathJoin(THEME_DIR, "post.jsx");
+      renderToFile((page as any).outputFile, template, { vars: page });
     }
 
     // 3. Handle other static content
@@ -146,7 +156,7 @@ export default {
     }
 
     // used for index page generation
-    const pagesInAnIndex = pages.filter((page) => page.indexed);
+    const pagesInAnIndex = pages.filter((page) => (page as any).indexed);
     const pagesByCanonicalDir = partition(
       pagesInAnIndex,
       (page) => page.canonicalDir
@@ -164,7 +174,7 @@ export default {
     const canonicalDirToGendPages = Object.fromEntries(
       canonicalDirs.map((dir) => [
         dir,
-        fs.readdirSync(path.join(OUTPUT_DIR, dir)),
+        fs.readdirSync(pathJoin(OUTPUT_DIR, dir)),
       ])
     );
 
@@ -173,7 +183,7 @@ export default {
       .map(([dir, _]) => dir);
 
     for (const canonicalDir of canonicalDirsMissingIndex) {
-      const indexOutput = path.join(OUTPUT_DIR, canonicalDir, "index.html");
+      const indexOutput = pathJoin(OUTPUT_DIR, canonicalDir, "index.html");
       const subdirectories = canonicalDirs
         .filter(
           (dir) =>
@@ -197,15 +207,15 @@ export default {
         subdirectories,
         ROOT_PATH: findRelative(canonicalDir, "/"),
       };
-      const template = path.join(THEME_DIR, "index.jsx");
+      const template = pathJoin(THEME_DIR, "index.jsx");
       renderToFile(indexOutput, template, {
         vars: index,
       });
     }
 
     // copy over other folders
-    // fs.copySync("src/css", path.join(OUTPUT_DIR, "css"));
-    // fs.copySync("src/js", path.join(OUTPUT_DIR, "js"));
-    fs.copySync("src/images", path.join(OUTPUT_DIR, "images"));
+    // fs.copySync("src/css", pathJoin(OUTPUT_DIR, "css"));
+    // fs.copySync("src/js", pathJoin(OUTPUT_DIR, "js"));
+    fs.copySync("src/images", pathJoin(OUTPUT_DIR, "images"));
   },
 };
