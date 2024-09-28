@@ -1,4 +1,6 @@
-# Two Lives at the End of the Night
+---
+modified: 2024-08-10T02:53:51.448Z
+---# Two Lives at the End of the Night
 
 Some of my favourite music is from [a band that doesn't exist anymore](https://open.spotify.com/artist/7nBttqD9rQexTmpXFdCO5Z?si=O3Degil4ST6qAqss53Gfwg), and one of my all-time favourite songs by them is "Two Lives at the End of the Night", the 11th and last track of their excellent 2010 album ["Somewhere on the Golden Coast"](https://open.spotify.com/album/29spYWPjQv78wHbZRQNB6w?si=9m5tY23gRpe_pn7kCllPWA).
 

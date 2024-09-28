@@ -1,4 +1,6 @@
-# Yip
+---
+modified: 2024-08-10T02:53:51.448Z
+---# Yip
 
 This blog is built with `yip`, a very opinionated static site generator for blogging I put together because I guess that's the rabbit I had to go down before acutally writing. It _is_ a good topic for a first blog post though, so I'll quickly describe some of its interesting parts. `yip` is built on top of [sphido](https://github.com/sphido/sphido), focuses on what I need, and is built for how I think I'll want to blog. I won't release it on `npm` because I built it for me, but I do incorporate some cool ideas and opinions I thought would be worth sharing.
 

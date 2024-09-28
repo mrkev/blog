@@ -1,4 +1,6 @@
-# The American Tragedy
+---
+modified: 2024-08-10T02:53:51.447Z
+---# The American Tragedy
 
 It’s world cup season, and amongst many other things that meant I got thinking a bit about national identity again. I’m Mexican, and that fact is as true as they come— everything from my passport to my memories are Mexican and in Mexico. Nonetheless, as this video reminded me, there’s a lot of people who have to grapple with the foundations of their national identity much more than I do:
 

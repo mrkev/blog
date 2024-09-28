@@ -71,7 +71,7 @@ export default {
     );
 
     // only modified files that changed
-    pages = pages.filter((page) => page.gitStatus != "--");
+    // pages = pages.filter((page) => page.gitStatus != "--");
 
     for (const page of pages) {
       let newMeta: Record<string, any> = {};
@@ -88,8 +88,8 @@ export default {
       }
 
       // ensure all pages havea creation date
-      if (page.gitStatus === "--" && page.meta.created == null) {
-        newMeta.created = page.meta.created ?? yaml.dump(page.created).trim();
+      if (page.gitStatus === "--" && page.meta?.created == null) {
+        newMeta.created = page.meta?.created ?? yaml.dump(page.created).trim();
       }
 
       if (Object.keys(newMeta).length === 0) {
@@ -97,8 +97,6 @@ export default {
       }
 
       const newMetaStr = yaml.dump(newMeta, { schema: yaml.JSON_SCHEMA });
-      console.log(page);
-      console.log(newMetaStr);
 
       const content = [
         //

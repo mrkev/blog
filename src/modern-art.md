@@ -1,4 +1,6 @@
-# Modern Art
+---
+modified: 2024-08-10T02:53:51.447Z
+---# Modern Art
 
 ![bannana taped to a wall](./images/modern-art-1.jpg)
 
