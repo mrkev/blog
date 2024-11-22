@@ -1,3 +1,9 @@
+---
+file:
+  Created: 2023-06-02 1:00:00 #order after my-vscode-layout
+  Revised: 2024-01-27
+---
+
 # Birth Rates and Stress
 
 There’s a [thread in Hacker News](https://news.ycombinator.com/item?id=36159936) about global fertility rates, and unsurprisingly a few comments along the line of this one:

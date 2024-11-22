@@ -1,3 +1,8 @@
+---
+file:
+  Created: 2023-10-04
+---
+
 # Modern Art
 
 ![bannana taped to a wall](./images/modern-art-1.jpg)

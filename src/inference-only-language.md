@@ -2,6 +2,9 @@
 tags: [en]
 link: https://twitter.com/diegohaz/status/1655544359150927874
 title: Full type inference is not great
+file:
+  Created: 2023-05-10
+  Revised: 2023-05-11
 ---
 
 I saw this tweet recently, and thought I'd write about where the limits of inference in typechecking lie. I answered the tweet but seeing as I haven't written a post recently, it seemed like a good excuse to put some hypothetical ink on some hypothetical paper.

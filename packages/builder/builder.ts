@@ -97,17 +97,17 @@ export default {
       }
 
       const newMetaStr = yaml.dump(newMeta, { schema: yaml.JSON_SCHEMA });
-      console.log(page);
+      // console.log(page);
       console.log(newMetaStr);
 
-      const content = [
-        //
-        "---\n",
-        newMetaStr,
-        "---",
-        page.content,
-      ].join("");
-      fs.writeFileSync(page.path, content, { encoding: "utf8" });
+      // const content = [
+      //   //
+      //   "---\n",
+      //   newMetaStr,
+      //   "---",
+      //   page.content,
+      // ].join("");
+      // fs.writeFileSync(page.path, content, { encoding: "utf8" });
     }
   },
 
@@ -164,6 +164,11 @@ export default {
         // root by default is '', make it '/'. All other paths are already prepended by '/'
         if (page.canonicalDir === "") {
           page.canonicalDir = "/";
+        }
+
+        if (page.file) {
+          page.created = page.file.Created;
+          page.modified = page.file.Revised ?? page.file.Created;
         }
       },
     ];

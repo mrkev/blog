@@ -1,6 +1,8 @@
 ---
 link: https://www.youtube.com/watch?v=kqPKNksl9hk
-created:
+file:
+  Created: 2022-12-16
+  Revised: 2023-08-12
 ---
 
 > "I personally wouldn't mind if things got a little less interesting for a little while"
