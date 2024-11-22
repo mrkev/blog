@@ -8,6 +8,14 @@ const title = isRoot ? "Index" : `Directory listing for ${index.title}`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={`Listing of ${index.title}`} />
+    {/* <link
+      href="https://davidrzs.github.io/latexcss/latex.css"
+      rel="stylesheet"
+    /> */}
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/ysegor256/tacit@gh-pages/tacit-css-1.8.1.min.css"
+    />
     <link
       rel="stylesheet"
       type="text/css"

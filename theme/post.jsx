@@ -36,6 +36,23 @@ const previewImage = "http://aykev.dev/favicon/apple-touch-icon.png";
       content={previewImage}
     />
     {/* Site */}
+    {/* <link
+      href="https://davidrzs.github.io/latexcss/latex.css"
+      rel="stylesheet"
+    /> */}
+
+    {/* <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    /> */}
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/ysegor256/tacit@gh-pages/tacit-css-1.8.1.min.css"
+    />
+    {/* <link rel="stylesheet" href="https://unpkg.com/normalize.css"/ /> */}
+    {/* <link rel="stylesheet" href="https://unpkg.com/magick.css" /> */}
+    {/* <link rel="stylesheet" href="https://cdn.simplecss.org/simple-v1.css" /> */}
+
     <link
       rel="stylesheet"
       type="text/css"
