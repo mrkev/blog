@@ -75,6 +75,10 @@ article > p > img {
   width: 100%;
 }
 
+article > p > center > iframe {
+  width: 100%;
+}
+
 body {
   margin: 40px auto;
   max-width: 40rem;
@@ -103,6 +107,7 @@ pre:has(code) {
   border-radius: 3px;
   color: white;
   padding: 4px 8px 8px 8px;
+  overflow-x: scroll;
 }
 
 pre code {
@@ -164,4 +169,14 @@ footer {
 
 .index > li > i {
   opacity: 0.5;
+}
+
+.linked-box.youtube {
+  margin-bottom: 2rem;
+}
+
+.youtube > iframe {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
 }
