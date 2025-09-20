@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "yip",
-    "serve": "http-server docs"
+    "serve": "http-server docs",
+    "dev": "nodemon --watch src --exec \"npm run build\""
   },
   "private": true,
   "workspaces": [
@@ -19,6 +20,7 @@
     "@sphido/frontmatter": "2.0.12",
     "@sphido/meta": "^0.0.9",
     "@sphido/nunjucks": "^0.0.8",
+    "dayjs": "^1.11.18",
     "esm": "^3.2.25",
     "fs-extra": "^11.2.0",
     "globby": "^14.0.0",
@@ -26,5 +28,8 @@
     "nunjucks": "^3.2.4",
     "sphido-markdown": "^1.0.0"
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@1.22.19",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
 }

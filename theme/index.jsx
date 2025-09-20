@@ -8,6 +8,7 @@ const title = isRoot ? "Index" : `Directory listing for ${index.title}`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={`Listing of ${index.title}`} />
+    <link rel="stylesheet" href="https://unpkg.com/normalize.css" />
     {/* <link
       href="https://davidrzs.github.io/latexcss/latex.css"
       rel="stylesheet"
@@ -20,6 +21,11 @@ const title = isRoot ? "Index" : `Directory listing for ${index.title}`;
       rel="stylesheet"
       type="text/css"
       href={page.ROOT_PATH + "/css/main.css"}
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href={page.ROOT_PATH + "/css/fonts.css"}
     />
     <title>{index.title}</title>
     <script>
@@ -52,9 +58,11 @@ tags.async=!0,tags.src="https://aykev.containers.piwik.pro/"+id+".js"+qPString,s
         <a href={page.ROOT_PATH}>Midnight Joke</a>
       </h1>
       <div style={{ flexGrow: 1 }}></div>
-      <a href="http://twitter.com/aykev">twitter</a>
-      <a href="http://aykev.dev/">www</a>
-      <a href={page.ROOT_PATH + "/about"}>about</a>
+      <nav>
+        <a href="http://twitter.com/aykev">twitter</a>
+        <a href="http://aykev.dev/">www</a>
+        <a href={page.ROOT_PATH + "/about"}>about</a>
+      </nav>
     </header>
     {!isRoot && (
       <div>
@@ -67,7 +75,7 @@ tags.async=!0,tags.src="https://aykev.containers.piwik.pro/"+id+".js"+qPString,s
       </div>
     ))}
     <hr />
-    <ul>
+    <ul class="index">
       {index.pages
         .sort((a, b) => {
           return b.created.getTime() - a.created.getTime();

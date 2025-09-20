@@ -49,7 +49,7 @@ const previewImage = "http://aykev.dev/favicon/apple-touch-icon.png";
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/ysegor256/tacit@gh-pages/tacit-css-1.8.1.min.css"
     />
-    {/* <link rel="stylesheet" href="https://unpkg.com/normalize.css"/ /> */}
+    <link rel="stylesheet" href="https://unpkg.com/normalize.css" />
     {/* <link rel="stylesheet" href="https://unpkg.com/magick.css" /> */}
     {/* <link rel="stylesheet" href="https://cdn.simplecss.org/simple-v1.css" /> */}
 
@@ -57,6 +57,11 @@ const previewImage = "http://aykev.dev/favicon/apple-touch-icon.png";
       rel="stylesheet"
       type="text/css"
       href={page.ROOT_PATH + "/css/main.css"}
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href={page.ROOT_PATH + "/css/fonts.css"}
     />
     <title>{page.title}</title>
     <script>
@@ -90,14 +95,18 @@ tags.async=!0,tags.src="https://aykev.containers.piwik.pro/"+id+".js"+qPString,s
         <a href={page.ROOT_PATH}>Midnight Joke</a>
       </h1>
       <div style={{ flexGrow: 1 }}></div>
-      <a href=".">&lt; back</a>
-      <a href="http://twitter.com/aykev">twitter</a>
-      <a href="http://aykev.dev/">www</a>
-      <a href={page.ROOT_PATH + "/about"}>about</a>
+      <nav>
+        <a href=".">&lt; back</a>
+        <a href="http://twitter.com/aykev">twitter</a>
+        <a href="http://aykev.dev/">www</a>
+        <a href={page.ROOT_PATH + "/about"}>about</a>
+      </nav>
     </header>
     <hr />
-    {page.embed}
-    {page.content}
+    <article>
+      {page.embed}
+      {page.content}
+    </article>
     <hr />
     <footer>
       <small>
