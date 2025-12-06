@@ -14,6 +14,10 @@ Cornell has a museum in-site— the Johnson Museum— and Prof Owens arranged fo
 
 Why was this figurine here anyway? Was it stolen, and if so, when? Was it found, and if so, why wasn’t it handed to a museum in Mexico so it could stay there? My grandma used to tell me stories about farmers finding archeological artifacts in hometown, a small village about a 3 day walk from Guadalajara, when plowing the ground. Did a local or a foreigner find this figurine? How many hands decided that it’d eventually end here? The history of this figurine will remain unknown to me, beyond the plaque stating that it was found in the state of Nayarit, not to far from the soil I grew up in.
 
+![Seated Female Figure with Pot](https://emuseum.cornell.edu/internal/media/dispatcher/77911/preview)
+
+<!-- https://emuseum.cornell.edu/objects/29940/seated-female-figure-with-pot?ctx=776443d12e92139b079e98d54da7b84e73ce25f7&idx=35794 -->
+
 Once I scanned the figurine I didn’t modify it, and I printed it hoping to be as close to the form and dimensions of the original. The resulting figurine was as close as I could reconstruct the original. I wished it were the original. My project wasn’t one I could complete during the semester, and I made Prof. Owens aware of that.
 
 Come winter vacation, I flew back home to Guadalajara and brought the figurine with me. I put it in the ground, on my grandma’s front yard, and sent a picture to Prof. Owens. I had returned it home.
@@ -21,3 +25,5 @@ Come winter vacation, I flew back home to Guadalajara and brought the figurine w
 It was a symbolic act, of course, because the original was still tucked away in a room to be barely noticed by people with barely any historical connection to this object. But it was home too. A copy of it. A symbolic representation of, what at the end of the day, is a symbol anyway. A modern version of it made of 3D printed plastic. A modern adaptation, a second edition that took hundreds of years to make, a child conceptually, an artifact by a descendant of the same people. It was a simple act, but it was meaningful. I think about it.
 
 Today I thought about it, when a friend as me what San Francisco and Home “represent” to me. It’s been 10 years since I first set foot in the USA, it’s no question that I am the figurine. I wonder which one though.
+
+<!-- modified: 20, sept, 2025 -->
