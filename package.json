@@ -16,14 +16,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sphido/core": "2.0.30",
-    "@sphido/frontmatter": "2.0.17",
+    "@sphido/core": "3.0.0",
+    "@sphido/frontmatter": "3.0.0",
     "@sphido/meta": "^0.0.9",
     "@sphido/nunjucks": "^0.0.8",
     "dayjs": "^1.11.20",
     "esm": "^3.2.25",
     "fs-extra": "^11.3.4",
-    "globby": "^14.1.0",
+    "globby": "^16.2.0",
     "marked": "^4.3.0",
     "nunjucks": "^3.2.4",
     "sphido-markdown": "workspace:*"
