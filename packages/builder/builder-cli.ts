@@ -13,7 +13,7 @@ import fs from "fs";
     if (fs.existsSync(out)) {
       fs.rmSync(out, { recursive: true });
     }
-    await builder.prepare({});
+    await builder.prepare({ src });
     await builder.build({ themeDir: "./theme/" });
     spinner.succeed(`Built ./${src} to ./${out}.`);
   } catch (e) {

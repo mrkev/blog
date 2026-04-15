@@ -1,5 +1,6 @@
 import { execSync } from "child_process";
 import { extend } from "./util.ts";
+import type { Page } from "./types.ts";
 
 function log(x: any) {
   console.log(x);
@@ -53,7 +54,7 @@ export function getChangedFiles(
 
 let gitInfo: Map<string, "modified" | "created"> | null;
 
-export function motificationStatus(page: Record<string, any>) {
+export async function motificationStatus(page: Page) {
   if (gitInfo == null) {
     gitInfo = getChangedFiles();
   }

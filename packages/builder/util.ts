@@ -14,11 +14,11 @@ export function partition<T>(array: T[], getBucket: (elem: T) => string) {
   return result;
 }
 
-export function extend<T extends {}, U>(
-  page: Record<string, any>,
-  extender: Record<string, any>,
+export function extend(
+  page: Record<string, unknown>,
+  extender: Record<string, unknown>,
 ) {
-  Object.keys(extender).forEach(function (key) {
+  for (const key in extender) {
     page[key] = page[key] || extender[key];
-  });
+  }
 }

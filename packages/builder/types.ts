@@ -1,4 +1,6 @@
 export type Page = {
-  content: string;
+  content?: string;
   [id: string]: any;
 };
+
+export type { Dirent } from "node:fs";

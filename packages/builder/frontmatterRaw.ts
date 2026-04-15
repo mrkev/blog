@@ -1,9 +1,10 @@
 import { readFile } from "@sphido/core";
+import type { Page } from "@sphido/core";
 import yaml from "js-yaml";
-import type { Page } from "./types.ts";
+import type { Dirent } from "./types.ts";
 
 // like "@sphido/frontmatter" but instead of dumping into page, dumps into page.meta
-export async function frontmatterRaw(page: Page | null, dirent) {
+export async function frontmatterRaw(page: Page | null, dirent: Dirent) {
   if (!dirent.isFile()) {
     return;
   }
@@ -13,7 +14,7 @@ export async function frontmatterRaw(page: Page | null, dirent) {
   }
 
   // Process Front Matter
-  if (page?.content.startsWith("---") || page?.content.startsWith("<!--")) {
+  if (page?.content?.startsWith("---") || page?.content?.startsWith("<!--")) {
     let meta = {};
     page.content.replace(
       /^<!--([\s\S]+?)-->|^---([\s\S]+?)---/,
@@ -21,7 +22,7 @@ export async function frontmatterRaw(page: Page | null, dirent) {
         // page.metaRaw = html || md;
         meta = yaml.load((html || md).trim(), { schema: yaml.JSON_SCHEMA });
         page.meta = meta;
-        page.content = page.content.slice(frontMatter.length);
+        page.content = page.content?.slice(frontMatter.length);
       },
     );
   }

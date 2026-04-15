@@ -1,13 +1,13 @@
-import type { Page } from "./types.ts";
+import type { Dirent, Page } from "./types.ts";
 
-export async function frontmatter(page: Page | null, dirent) {
+export async function frontmatter(page: Page | null, dirent: Dirent) {
   if (dirent.isFile()) {
     if (!page?.content && page?.path) {
       page.content = await readFile(page.path);
     }
 
     // Process Front Matter
-    if (page?.content.startsWith("---") || page?.content.startsWith("<!--")) {
+    if (page?.content?.startsWith("---") || page?.content?.startsWith("<!--")) {
       let meta = {};
       page.content.replace(
         /^<!--([\s\S]+?)-->|^---([\s\S]+?)---/,

@@ -20,11 +20,9 @@ import meta, { dates } from "./meta.ts";
 import { motificationStatus } from "./modificationStatus.ts";
 import { partition } from "./util.ts";
 import { frontmatterRaw } from "./frontmatterRaw.ts";
-import type { Page } from "./types.ts";
+import type { Dirent, Page } from "./types.ts";
 
 // TODO: rename ROOT_PATH to PATH_TO_ROOT
-
-// if the path contains /-ignore (ie, /src/ignore-test-page.md), it isn't processed
 
 function findRelative(child: string, parent: string) {
   if (child.indexOf(parent) !== 0) {
@@ -42,7 +40,8 @@ function findRelative(child: string, parent: string) {
   return relativePath;
 }
 
-function include(dirent) {
+function include(dirent: Dirent): boolean {
+  // Ignore anything starting with "_", "." or "ignore-"
   if (
     dirent.name.startsWith("_") ||
     dirent.name.startsWith(".") ||
@@ -51,14 +50,14 @@ function include(dirent) {
     return false;
   }
 
-  if (dirent.isFile()) {
-    // Accept *.md, *.html
-    const res = dirent.name.endsWith(".md") || dirent.name.endsWith(".html");
-    return res;
+  // Ignore dirs
+  if (!dirent.isFile()) {
+    return false;
   }
 
-  // Ignore dirs
-  return false;
+  // Accept *.md, *.html
+  const res = dirent.name.endsWith(".md") || dirent.name.endsWith(".html");
+  return res;
 }
 
 export default {
@@ -137,7 +136,7 @@ export default {
       meta,
       basenameSlug,
       linkFieldToEmbed,
-      (page) => {
+      (page: Page) => {
         // page.indexed is true by default, even if not included
         page.indexed = page.indexed === undefined ? true : page.indexed;
         // for SRC/posts/a/foo.md

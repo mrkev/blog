@@ -1,3 +1,4 @@
+import type { Page } from "@sphido/core";
 import { extend } from "./util.ts";
 import { statSync } from "fs";
 import { dirname } from "node:path";
@@ -6,7 +7,7 @@ import { inspect } from "util";
 
 const headline = /(?<=<h[12][^>]*?>)([^<>]+?)(?=<\/h[12]>)/i;
 
-export function dates(page: Record<string, any>) {
+export async function dates(page: Page) {
   const stats = page.path ? statSync(page.path) : null;
   extend(page, {
     modified: stats ? new Date(inspect(stats.mtime)) : new Date(),
@@ -14,7 +15,7 @@ export function dates(page: Record<string, any>) {
   });
 }
 
-export default (page: Record<string, any>) => {
+export default (page: Page) => {
   dates(page);
   extend(page, {
     content: "",
