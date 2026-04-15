@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@sphido/core':
-        specifier: 2.0.24
-        version: 2.0.24
+        specifier: 2.0.30
+        version: 2.0.30
       '@sphido/frontmatter':
-        specifier: 2.0.12
-        version: 2.0.12
+        specifier: 2.0.17
+        version: 2.0.17
       '@sphido/meta':
         specifier: ^0.0.9
         version: 0.0.9
@@ -21,19 +21,19 @@ importers:
         specifier: ^0.0.8
         version: 0.0.8(chokidar@3.6.0)
       dayjs:
-        specifier: ^1.11.18
+        specifier: ^1.11.20
         version: 1.11.20
       esm:
         specifier: ^3.2.25
         version: 3.2.25
       fs-extra:
-        specifier: ^11.2.0
+        specifier: ^11.3.4
         version: 11.3.4
       globby:
-        specifier: ^14.0.0
+        specifier: ^14.1.0
         version: 14.1.0
       marked:
-        specifier: ^4.0.17
+        specifier: ^4.3.0
         version: 4.3.0
       nunjucks:
         specifier: ^3.2.4
@@ -43,7 +43,7 @@ importers:
         version: link:packages/sphido-markdown
     devDependencies:
       nodemon:
-        specifier: ^3.1.10
+        specifier: ^3.1.14
         version: 3.1.14
 
   packages/builder:
@@ -208,12 +208,12 @@ packages:
     resolution: {integrity: sha512-5/kmIOY9FF32nicXH+5yLNTX4NJ4atl7jRgqAJuIn/iyDFXBktOKDxCvyGE/EzmF4ngSUvjXxQUQlQiZ5lfw+w==}
     engines: {node: '>=10'}
 
-  '@sphido/core@2.0.24':
-    resolution: {integrity: sha512-ZQru/odmdEaYSWFr4rk4SRCvOv+mFEVQ76XFnCDYcFZJK9VVnf3bQqnNmUROULNYqpckK6dCLalaQVhMIrBnYQ==}
+  '@sphido/core@2.0.30':
+    resolution: {integrity: sha512-ASxx7jXvlsLKFGPPmN25j0Z+2NFGLBEB04ANBpB+3jAZQPf+AxkOYlpe23/DdXMqpJ+g0CGGyPSX6uQrJXIDJg==}
     engines: {node: '>=16'}
 
-  '@sphido/frontmatter@2.0.12':
-    resolution: {integrity: sha512-RrOHz3m/uLnBYpix0ztscUMT/6n6opDZTUvY1AH8lT3SyBc1kODtDQqsGdbgllMRD2it+Hf3P+LNbNUzsYAk3w==}
+  '@sphido/frontmatter@2.0.17':
+    resolution: {integrity: sha512-9CB0vPzZi+s9kM4ieV7UtE87x/32AyOkF23hRO6I4XHNCkOkc933vuW6Bo3CUchPmYRczOFL8SlZnbCkAnU7qw==}
     engines: {node: '>=16'}
 
   '@sphido/meta@0.0.9':
@@ -813,9 +813,9 @@ snapshots:
       escape-string-regexp: 2.0.0
       lodash.deburr: 4.1.0
 
-  '@sphido/core@2.0.24': {}
+  '@sphido/core@2.0.30': {}
 
-  '@sphido/frontmatter@2.0.12':
+  '@sphido/frontmatter@2.0.17':
     dependencies:
       js-yaml: 4.1.1
 

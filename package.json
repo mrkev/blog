@@ -16,20 +16,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sphido/core": "2.0.24",
-    "@sphido/frontmatter": "2.0.12",
+    "@sphido/core": "2.0.30",
+    "@sphido/frontmatter": "2.0.17",
     "@sphido/meta": "^0.0.9",
     "@sphido/nunjucks": "^0.0.8",
-    "dayjs": "^1.11.18",
+    "dayjs": "^1.11.20",
     "esm": "^3.2.25",
-    "fs-extra": "^11.2.0",
-    "globby": "^14.0.0",
-    "marked": "^4.0.17",
+    "fs-extra": "^11.3.4",
+    "globby": "^14.1.0",
+    "marked": "^4.3.0",
     "nunjucks": "^3.2.4",
     "sphido-markdown": "workspace:*"
   },
   "packageManager": "pnpm@10.33.0",
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.14"
   }
 }
