@@ -1,4 +1,6 @@
-export async function frontmatter(page, dirent) {
+import type { Page } from "./types.ts";
+
+export async function frontmatter(page: Page | null, dirent) {
   if (dirent.isFile()) {
     if (!page?.content && page?.path) {
       page.content = await readFile(page.path);
@@ -13,7 +15,7 @@ export async function frontmatter(page, dirent) {
           meta = yaml.load((html || md).trim());
           page = Object.assign(page, meta);
           page.content = page.content.slice(frontMatter.length).trim();
-        }
+        },
       );
     }
   }

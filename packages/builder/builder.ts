@@ -1,3 +1,4 @@
+// @ts-ignore
 import { getPages } from "@sphido/core";
 import yaml from "js-yaml";
 // @ts-ignore
@@ -5,6 +6,7 @@ import { frontmatter } from "@sphido/frontmatter";
 import fs from "fs-extra";
 import { globby } from "globby";
 import { dirname, join as pathJoin } from "path";
+// @ts-ignore
 import { markdown } from "sphido-markdown";
 // @ts-ignore
 import basenameSlug from "sphido-basename-as-slug";
@@ -18,6 +20,7 @@ import meta, { dates } from "./meta.ts";
 import { motificationStatus } from "./modificationStatus.ts";
 import { partition } from "./util.ts";
 import { frontmatterRaw } from "./frontmatterRaw.ts";
+import type { Page } from "./types.ts";
 
 // import meta from "@sphido/meta";
 // import { renderToFile } from "@sphido/nunjucks";
@@ -67,7 +70,7 @@ export default {
 
     let pages = await getPages(
       { path: SOURCE_DIR, include },
-      ...[frontmatterRaw, dates, motificationStatus]
+      ...[frontmatterRaw, dates, motificationStatus],
     );
 
     // only modified files that changed
@@ -146,7 +149,7 @@ export default {
         // => DOCS/posts/a/foo.html
         page.outputFile = pathJoin(
           page.dir.replace(SOURCE_DIR, OUTPUT_DIR),
-          page.outputBasename
+          page.outputBasename,
         );
         // => DOCS/posts/a
         page.outputDir = page.dir.replace(SOURCE_DIR, OUTPUT_DIR);
@@ -174,7 +177,10 @@ export default {
     ];
 
     // 1. Process all md files
-    const pages = await getPages({ path: SOURCE_DIR, include }, ...extenders);
+    const pages: Page[] = await getPages(
+      { path: SOURCE_DIR, include },
+      ...extenders,
+    );
     // console.log(pages);
     // process.exit(0);
 
@@ -199,7 +205,7 @@ export default {
       // TODO: generate index.html from index.md file by passing "index" vars
 
       const template = pathJoin(THEME_DIR, "post.jsx");
-      renderToFile((page as any).outputFile, template, { vars: page });
+      renderToFile(page.outputFile, template, { vars: page });
     }
 
     // 3. Handle other static content
@@ -209,10 +215,10 @@ export default {
     }
 
     // used for index page generation
-    const pagesInAnIndex = pages.filter((page) => (page as any).indexed);
+    const pagesInAnIndex = pages.filter((page) => page.indexed);
     const pagesByCanonicalDir = partition(
       pagesInAnIndex,
-      (page) => page.canonicalDir
+      (page) => page.canonicalDir,
     );
 
     // 4. Generate index pages
@@ -228,7 +234,7 @@ export default {
       canonicalDirs.map((dir) => [
         dir,
         fs.readdirSync(pathJoin(OUTPUT_DIR, dir)),
-      ])
+      ]),
     );
 
     const canonicalDirsMissingIndex = Object.entries(canonicalDirToGendPages)
@@ -245,7 +251,7 @@ export default {
             // we are not the cannonical dir (no circular references)
             dir !== canonicalDir &&
             // direct decendants only (ie, /post no /post/articles/test)
-            dir.replace(canonicalDir, "").indexOf("/") === -1
+            dir.replace(canonicalDir, "").indexOf("/") === -1,
         )
         // make all paths relative
         .map((dir) => "./" + dir.replace(canonicalDir, ""));
@@ -254,7 +260,7 @@ export default {
       const index = {
         pages:
           pagesByCanonicalDir[canonicalDir]?.sort(
-            (a, b) => b.modified - a.modified
+            (a, b) => b.modified - a.modified,
           ) ?? [],
         title: canonicalDir,
         subdirectories,

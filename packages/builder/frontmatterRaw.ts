@@ -1,8 +1,9 @@
 import { readFile } from "@sphido/core";
 import yaml from "js-yaml";
+import type { Page } from "./types.ts";
 
 // like "@sphido/frontmatter" but instead of dumping into page, dumps into page.meta
-export async function frontmatterRaw(page, dirent) {
+export async function frontmatterRaw(page: Page | null, dirent) {
   if (!dirent.isFile()) {
     return;
   }
@@ -21,7 +22,7 @@ export async function frontmatterRaw(page, dirent) {
         meta = yaml.load((html || md).trim(), { schema: yaml.JSON_SCHEMA });
         page.meta = meta;
         page.content = page.content.slice(frontMatter.length);
-      }
+      },
     );
   }
 }

@@ -1,5 +1,5 @@
-export function partition(array, getBucket) {
-  const result = {};
+export function partition<T>(array: T[], getBucket: (elem: T) => string) {
+  const result: Record<string, T[]> = {};
 
   for (let elem of array) {
     const bucket = getBucket(elem);
@@ -16,7 +16,7 @@ export function partition(array, getBucket) {
 
 export function extend<T extends {}, U>(
   page: Record<string, any>,
-  extender: Record<string, any>
+  extender: Record<string, any>,
 ) {
   Object.keys(extender).forEach(function (key) {
     page[key] = page[key] || extender[key];

@@ -29,9 +29,9 @@ export default (page: Record<string, any>) => {
   });
 };
 
-function titleifyKebabCase(s) {
+function titleifyKebabCase(s: string) {
   // https://stackoverflow.com/questions/64489395/converting-snake-case-string-to-title-case
   return s.replace(/^-*(.)|-+(.)/g, (s, c, d) =>
-    c ? c.toUpperCase() : " " + d.toUpperCase()
+    c ? c.toUpperCase() : " " + d.toUpperCase(),
   );
 }

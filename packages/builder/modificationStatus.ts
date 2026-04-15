@@ -1,13 +1,13 @@
 import { execSync } from "child_process";
 import { extend } from "./util.ts";
 
-function log(x) {
+function log(x: any) {
   console.log(x);
   return x;
 }
 
 export function getChangedFiles(
-  src: string = ""
+  src: string = "",
 ): Map<string, "modified" | "created"> {
   const command = `git status --porcelain`;
   const diffOutput = execSync(command).toString();

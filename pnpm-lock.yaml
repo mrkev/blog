@@ -51,6 +51,9 @@ importers:
       ora:
         specifier: ^5.3.0
         version: 5.4.1
+      sphido-markdown:
+        specifier: workspace:*
+        version: link:../sphido-markdown
     devDependencies:
       '@types/js-yaml':
         specifier: ^4.0.9

@@ -1,10 +1,12 @@
-export function getEmbed(link) {
+import type { Page } from "./types.ts";
+
+export function getEmbed(link: string) {
   const url = new URL(link);
   switch (url.hostname) {
     case "twitter.com": {
       return `
       <iframe border=0 frameborder=0 width=550 height=380 src="https://twitframe.com/show?url=${encodeURI(
-        url.href
+        url.href,
       )}"></iframe>
     `;
     }
@@ -19,8 +21,8 @@ export function getEmbed(link) {
         show_reposts: false,
         show_teaser: false,
       };
-      const configStr = Object.keys(config)
-        .map((key) => `${key}=${escape(config[key])}`)
+      const configStr = (Object.keys(config) as (keyof typeof config)[])
+        .map((key) => `${key}=${escape(String(config[key]))}`)
         .join("&");
       const src = `https://w.soundcloud.com/player/?${configStr}`;
       return `
@@ -40,7 +42,7 @@ export function getEmbed(link) {
   }
 }
 
-export function linkFieldToEmbed(page) {
+export function linkFieldToEmbed(page: Page) {
   if (!page.link) {
     return;
   }
@@ -52,12 +54,12 @@ export function linkFieldToEmbed(page) {
 const YOUTUBE_URL_IN_OWNLINE_REGEX =
   /^\n(?:(?:https?:)?\/\/)?(?:(?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(?:\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$\n\n/gim;
 
-export function preprocessSpecialEmbeds(page) {
+export function preprocessSpecialEmbeds(page: Page) {
   const replaced = page.content.replaceAll(
     YOUTUBE_URL_IN_OWNLINE_REGEX,
     (_match, _hostname, id) => {
       return `<div class="youtube"><iframe width="560" height="315" src="https://www.youtube.com/embed/${id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>\n\n`;
-    }
+    },
   );
   page.content = replaced;
 }
