@@ -22,9 +22,6 @@ import { partition } from "./util.ts";
 import { frontmatterRaw } from "./frontmatterRaw.ts";
 import type { Page } from "./types.ts";
 
-// import meta from "@sphido/meta";
-// import { renderToFile } from "@sphido/nunjucks";
-
 // TODO: rename ROOT_PATH to PATH_TO_ROOT
 
 // if the path contains /-ignore (ie, /src/ignore-test-page.md), it isn't processed
