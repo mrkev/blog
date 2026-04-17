@@ -1,6 +1,6 @@
 #!/usr/bin/env node --experimental-strip-types
 
-import builder from "./builder.ts";
+import builder from "../builder.ts";
 import ora from "ora";
 import fs from "fs";
 

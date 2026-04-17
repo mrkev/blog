@@ -1,5 +1,5 @@
-import { readFile } from "@sphido/core";
 import type { Page } from "@sphido/core";
+import { readFile } from "@sphido/core";
 import yaml from "js-yaml";
 import type { Dirent } from "./types.ts";
 
@@ -15,7 +15,7 @@ export async function frontmatterRaw(page: Page | null, dirent: Dirent) {
 
   // Process Front Matter
   if (page?.content?.startsWith("---") || page?.content?.startsWith("<!--")) {
-    let meta = {};
+    let meta: unknown = {};
     page.content.replace(
       /^<!--([\s\S]+?)-->|^---([\s\S]+?)---/,
       (frontMatter, html, md) => {
@@ -23,6 +23,7 @@ export async function frontmatterRaw(page: Page | null, dirent: Dirent) {
         meta = yaml.load((html || md).trim(), { schema: yaml.JSON_SCHEMA });
         page.meta = meta;
         page.content = page.content?.slice(frontMatter.length);
+        return "";
       },
     );
   }

@@ -15,20 +15,20 @@ export async function dates(page: Page) {
   });
 }
 
-export default (page: Page) => {
+export function meta(page: Page) {
   dates(page);
   extend(page, {
     content: "",
     // slug: slugify(page.title),
     title: (
-      page.content.match(headline) || [titleifyKebabCase(page.name) || ""]
+      page.content?.match(headline) || [titleifyKebabCase(page.name) || ""]
     )
       .pop()
       .trim(),
     tags: new Set(page.tags || []),
     dir: dirname(page.path),
   });
-};
+}
 
 function titleifyKebabCase(s: string) {
   // https://stackoverflow.com/questions/64489395/converting-snake-case-string-to-title-case
@@ -36,3 +36,5 @@ function titleifyKebabCase(s: string) {
     c ? c.toUpperCase() : " " + d.toUpperCase(),
   );
 }
+
+export default meta;

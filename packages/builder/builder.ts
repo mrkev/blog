@@ -12,15 +12,16 @@ import { markdown } from "sphido-markdown";
 import basenameSlug from "sphido-basename-as-slug";
 // @ts-ignore
 import { renderToFile } from "sphido-jsx-templates";
+import { frontmatterRaw } from "./frontmatterRaw.ts";
+import { include } from "./lib.ts";
 import {
   linkFieldToEmbed,
   preprocessSpecialEmbeds,
 } from "./linkFieldToEmbed.ts";
 import meta, { dates } from "./meta.ts";
 import { motificationStatus } from "./modificationStatus.ts";
+import type { Page } from "./types.ts";
 import { partition } from "./util.ts";
-import { frontmatterRaw } from "./frontmatterRaw.ts";
-import type { Dirent, Page } from "./types.ts";
 
 // TODO: rename ROOT_PATH to PATH_TO_ROOT
 
@@ -38,26 +39,6 @@ function findRelative(child: string, parent: string) {
   const relativePath = components.length > 0 ? components.join("/") : ".";
 
   return relativePath;
-}
-
-function include(dirent: Dirent): boolean {
-  // Ignore anything starting with "_", "." or "ignore-"
-  if (
-    dirent.name.startsWith("_") ||
-    dirent.name.startsWith(".") ||
-    dirent.name.startsWith("ignore-")
-  ) {
-    return false;
-  }
-
-  // Ignore dirs
-  if (!dirent.isFile()) {
-    return false;
-  }
-
-  // Accept *.md, *.html
-  const res = dirent.name.endsWith(".md") || dirent.name.endsWith(".html");
-  return res;
 }
 
 export default {

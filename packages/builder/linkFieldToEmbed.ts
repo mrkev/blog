@@ -55,7 +55,7 @@ const YOUTUBE_URL_IN_OWNLINE_REGEX =
   /^\n(?:(?:https?:)?\/\/)?(?:(?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(?:\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$\n\n/gim;
 
 export function preprocessSpecialEmbeds(page: Page) {
-  const replaced = page.content.replaceAll(
+  const replaced = page.content?.replaceAll(
     YOUTUBE_URL_IN_OWNLINE_REGEX,
     (_match, _hostname, id) => {
       return `<div class="youtube"><iframe width="560" height="315" src="https://www.youtube.com/embed/${id}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>\n\n`;

@@ -27,7 +27,7 @@ function transformTemplate(templateCode) {
       function (err, result) {
         if (err) rej(err);
         else res(result);
-      }
+      },
     );
   });
 }
@@ -48,7 +48,7 @@ class JSXT {
     if (typeof type !== "string") {
       throw new Error(
         "Only HTML elements are supported in templates at " +
-          "the moment. Make sure they're lowercase too"
+          "the moment. Make sure they're lowercase too",
       );
     }
 
